@@ -305,7 +305,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         {
             var castedGenerator = (SelectorGenerator<HtmlNode>)subgenerator;
 
-            var compiled =castedGenerator.Selector;
+            var compiled = castedGenerator.Selector;
 
             return nodes => nodes.Where(n => compiled(new[] { n }).Any());
         }

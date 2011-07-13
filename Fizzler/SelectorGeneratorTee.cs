@@ -268,6 +268,23 @@ namespace Fizzler
             Secondary.Eq(n);
         }
 
+        /// <summary>
+        /// Delegates to <see cref="Primary"/> then <see cref="Secondary"/> generator.
+        /// </summary>
+        public void Has(ISelectorGenerator subgenerator)
+        {
+            Primary.Has(subgenerator);
+            Secondary.Has(subgenerator);
+        }
+
+        /// <summary>
+        /// Creates an empty instance of the same type of the current generator.
+        /// </summary>
+        public ISelectorGenerator CreateNew() {
+            return new SelectorGeneratorTee(Primary.CreateNew(), Secondary.CreateNew());
+        }
+
+
 
     }
 }

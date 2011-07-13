@@ -225,5 +225,12 @@ namespace Fizzler.Systems.XmlNodeQuery
         }
 
 
+
+        public Selector<XmlNode> Has(ISelectorGenerator subgenerator)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }

@@ -19,13 +19,21 @@ namespace Fizzler
     {
         private readonly Reader<Token> _reader;
         private readonly ISelectorGenerator _generator;
+        private readonly bool _expectEoi;
 
         private Parser(Reader<Token> reader, ISelectorGenerator generator)
+            : this(reader, generator, true)
+        {
+        }
+
+
+        private Parser(Reader<Token> reader, ISelectorGenerator generator, bool expectEoi)
         {
             Debug.Assert(reader != null);
             Debug.Assert(generator != null);
             _reader = reader;
             _generator = generator;
+            _expectEoi = expectEoi;
         }
 
         /// <summary>
@@ -93,7 +101,8 @@ namespace Fizzler
                 Selector();
             }
 
-            Read(ToTokenSpec(TokenKind.Eoi));
+            if (_expectEoi)
+                Read(ToTokenSpec(TokenKind.Eoi));
         }
 
         private void Selector()
@@ -240,6 +249,7 @@ namespace Fizzler
                 case "eq": Eq(); break;
                 case "nth-child": Nth(); break;
                 case "nth-last-child": NthLast(); break;
+                case "has": Has(); break;
                 default:
                     {
                         throw new FormatException(string.Format(
@@ -249,6 +259,16 @@ namespace Fizzler
 
             Read(ToTokenSpec(Token.RightParenthesis()));
             return true;
+        }
+
+        private void Has()
+        {
+
+            // var subgenerator = (ISelectorGenerator) Activator.CreateInstance(_generator.GetType(), );
+            var subgenerator = _generator.CreateNew();
+            var inner = new Parser(_reader, subgenerator, false);
+            inner.Parse();
+            _generator.Has(subgenerator);
         }
 
         private void Nth()

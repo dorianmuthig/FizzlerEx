@@ -180,5 +180,11 @@ namespace Fizzler
         /// </summary>
         Selector<TElement> Eq(int n);
 
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// which represents an element that contains an element that matches the specified query.
+        /// </summary>
+        Selector<TElement> Has(ISelectorGenerator subgenerator);
+
     }
 }

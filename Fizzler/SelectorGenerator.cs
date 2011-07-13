@@ -21,7 +21,7 @@ namespace Fizzler
         /// of <see cref="IElementOps{TElement}"/> and the default equality
         /// comparer that is used for determining if two elements are equal.
         /// </summary>
-        public SelectorGenerator(IElementOps<TElement> ops) : this(ops, null) {}
+        public SelectorGenerator(IElementOps<TElement> ops) : this(ops, null) { }
 
         /// <summary>
         /// Initializes a new instance of this object with an instance
@@ -30,7 +30,7 @@ namespace Fizzler
         /// </summary>
         public SelectorGenerator(IElementOps<TElement> ops, IEqualityComparer<TElement> equalityComparer)
         {
-            if(ops == null) throw new ArgumentNullException("ops");
+            if (ops == null) throw new ArgumentNullException("ops");
             Ops = ops;
             _equalityComparer = equalityComparer ?? EqualityComparer<TElement>.Default;
             _selectors = new Stack<Selector<TElement>>();
@@ -63,8 +63,8 @@ namespace Fizzler
         {
             var selectors = _selectors;
             var top = Selector;
-            return top == null 
-                 ? selectors.Select(s => s) 
+            return top == null
+                 ? selectors.Select(s => s)
                  : selectors.Concat(Enumerable.Repeat(top, 1));
         }
 
@@ -73,8 +73,8 @@ namespace Fizzler
         /// </summary>
         protected void Add(Selector<TElement> selector)
         {
-            if(selector == null) throw new ArgumentNullException("selector");
-            
+            if (selector == null) throw new ArgumentNullException("selector");
+
             var top = Selector;
             Selector = top == null ? selector : (elements => selector(top(elements)));
         }
@@ -336,6 +336,22 @@ namespace Fizzler
             Add(Ops.Eq(n));
         }
 
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// which represents an element that contains an element that matches the specified query.
+        /// </summary>
+        public void Has(ISelectorGenerator subgenerator)
+        {
+            Add(Ops.Has(subgenerator));
+        }
+
+        /// <summary>
+        /// Creates an empty instance of the same type of the current generator.
+        /// </summary>
+        public ISelectorGenerator CreateNew()
+        {
+            return new SelectorGenerator<TElement>(Ops, _equalityComparer);
+        }
 
     }
 }

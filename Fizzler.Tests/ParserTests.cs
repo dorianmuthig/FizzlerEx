@@ -500,6 +500,19 @@ namespace Fizzler.Tests
                  throw new NotImplementedException();
              }
 
+             public void Has(ISelectorGenerator subgenerator)
+             {
+                 throw new NotImplementedException();
+             }
+
+
+
+             public ISelectorGenerator CreateNew()
+             {
+                 throw new NotImplementedException();
+             }
+
+
             #endregion
 
 

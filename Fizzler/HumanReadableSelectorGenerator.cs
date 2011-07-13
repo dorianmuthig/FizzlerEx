@@ -253,6 +253,22 @@ namespace Fizzler
             Add(string.Format(", take the {0}-th matched element", n));
         }
 
+        /// <summary>
+        /// Generates human-readable text of this pseudo-class.
+        /// </summary>
+        public void Has(ISelectorGenerator subgenerator)
+        {
+            var castedGenerator = (HumanReadableSelectorGenerator)subgenerator;
+            Add(string.Format(" which contain an element that matches ({0})", castedGenerator.Text));
+        }
+
+        /// <summary>
+        /// Creates an empty instance of the same type of the current generator.
+        /// </summary>
+        public ISelectorGenerator CreateNew()
+        {
+            return new HumanReadableSelectorGenerator();
+        }
 
 
     }

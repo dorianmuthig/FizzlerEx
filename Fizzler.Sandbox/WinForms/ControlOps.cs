@@ -269,5 +269,12 @@ namespace Fizzler.Systems.WinForms
         {
             throw new NotImplementedException();
         }
+
+        public Selector<Control> Has(ISelectorGenerator subgenerator)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }

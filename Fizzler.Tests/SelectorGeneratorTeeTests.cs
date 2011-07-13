@@ -114,7 +114,7 @@ namespace Fizzler.Tests
         [Test]
         public void AttrPrefixMatchTest()
         {
-            Run(tee.AttributePrefixMatch,NamespacePrefix.None, "hello", "there");
+            Run(tee.AttributePrefixMatch, NamespacePrefix.None, "hello", "there");
         }
 
         [Test]
@@ -217,7 +217,7 @@ namespace Fizzler.Tests
 
             // Assert the fact that the primary and secondary methods were 
             // both called with the same arguments and in the right order!
-            
+
             var recording = recordings.Dequeue();
             Assert.AreSame(primary, recording.Target);
             Assert.AreEqual(action.Name, MapMethod<ISelectorGenerator>(recording.Method).Name);
@@ -385,9 +385,20 @@ namespace Fizzler.Tests
                 OnInvoked(MethodBase.GetCurrentMethod(), n);
             }
 
+            public void Has(ISelectorGenerator subgenerator)
+            {
+                OnInvoked(MethodBase.GetCurrentMethod(), subgenerator);
+            }
+
+            public ISelectorGenerator CreateNew()
+            {
+                OnInvoked(MethodBase.GetCurrentMethod());
+                return new FakeSelectorGenerator();
+            }
+
             private void OnInvoked(MethodBase method, params object[] args)
             {
-                Recorder(new CallRecording<ISelectorGenerator>(this, (MethodInfo) method, args));
+                Recorder(new CallRecording<ISelectorGenerator>(this, (MethodInfo)method, args));
             }
 
 

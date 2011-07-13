@@ -155,6 +155,12 @@ namespace Fizzler
         /// which represents the N-th matched element.
         /// </summary>
         void Eq(int n);
+        
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// which represents an element that contains an element that matches the query specified by the argument.
+        /// </summary>
+        void Has(ISelectorGenerator generator);
 
         //
         // Combinators
@@ -194,5 +200,10 @@ namespace Fizzler
         /// which represents an element that is the N-th child from bottom up of some other element.
         /// </summary>
         void NthLastChild(int a, int b);
+
+        /// <summary>
+        /// Creates an empty instance of the same type of the current generator.
+        /// </summary>
+        ISelectorGenerator CreateNew();
     }
 }

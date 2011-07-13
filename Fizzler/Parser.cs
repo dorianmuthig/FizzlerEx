@@ -263,8 +263,6 @@ namespace Fizzler
 
         private void Has()
         {
-
-            // var subgenerator = (ISelectorGenerator) Activator.CreateInstance(_generator.GetType(), );
             var subgenerator = _generator.CreateNew();
             var inner = new Parser(_reader, subgenerator, false);
             inner.Parse();

@@ -11,15 +11,17 @@ namespace DummySandbox
     {
         static void Main(string[] args)
         {
-            var k = HtmlNode.CreateNode(@"
+            var doc = new HtmlDocument();
+            var div = doc.CreateElement("div");
+            div.InnerHtml = (@"
 
-<span><span>
-<span><b></b><span>
+<span></span>
+<span><b></b></span>
 
 
 ");
 
-            var r = k.QuerySelector("span:has(b)");
+            var r = div.QuerySelectorAll("span:has(b)");
 
         }
     }

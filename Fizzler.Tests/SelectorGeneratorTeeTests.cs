@@ -300,6 +300,11 @@ namespace Fizzler.Tests
                 OnInvoked(MethodBase.GetCurrentMethod(), prefix, name, value);
             }
 
+            public void AttributeNotEqual(NamespacePrefix prefix, string name, string value)
+            {
+                OnInvoked(MethodBase.GetCurrentMethod(), prefix, name, value);
+            }
+
             public void AttributeIncludes(NamespacePrefix prefix, string name, string value)
             {
                 OnInvoked(MethodBase.GetCurrentMethod(), prefix, name, value);
@@ -375,10 +380,17 @@ namespace Fizzler.Tests
                 OnInvoked(MethodBase.GetCurrentMethod(), a, b);
             }
 
+            public void Eq(int n)
+            {
+                OnInvoked(MethodBase.GetCurrentMethod(), n);
+            }
+
             private void OnInvoked(MethodBase method, params object[] args)
             {
                 Recorder(new CallRecording<ISelectorGenerator>(this, (MethodInfo) method, args));
             }
+
+
         }
     }
 }

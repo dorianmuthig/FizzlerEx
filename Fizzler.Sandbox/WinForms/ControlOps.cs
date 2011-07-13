@@ -101,6 +101,18 @@ namespace Fizzler.Systems.WinForms
 
         /// <summary>
         /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>
+        /// that represents an element without the given attribute <paramref name="name"/>
+        /// or with a different value <paramref name="value"/>.
+        /// </summary>
+        public virtual Selector<Control> AttributeNotEqual(NamespacePrefix prefix, string name, string value)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+        /// <summary>
+        /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>
         /// that represents a control with the given property <paramref name="name"/>
         /// and whose value is a whitespace-separated list of words, one of 
         /// which is exactly <paramref name="value"/>.
@@ -249,6 +261,11 @@ namespace Fizzler.Systems.WinForms
         }
 
         public Selector<Control> NthLastChild(int a, int b)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Selector<Control> Eq(int n)
         {
             throw new NotImplementedException();
         }

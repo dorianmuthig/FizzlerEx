@@ -31,6 +31,11 @@ namespace Fizzler
         DashMatch,
 
         /// <summary>
+        /// Represents "!="
+        /// </summary>
+        NotEqual,
+
+        /// <summary>
         /// Represents "^="
         /// </summary>
         PrefixMatch,

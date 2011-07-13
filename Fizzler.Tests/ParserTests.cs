@@ -380,6 +380,12 @@ namespace Fizzler.Tests
                 AttributeExactValue = value;
             }
 
+            public void AttributeNotEqual(NamespacePrefix prefix, string name, string value)
+            {
+                throw new NotImplementedException();
+            }
+
+
             public void AttributeIncludes(NamespacePrefix prefix, string name, string value)
             {
                 AttributeIncludesPrefix = prefix;
@@ -489,7 +495,15 @@ namespace Fizzler.Tests
                  throw new NotImplementedException();
              }
 
+             public void Eq(int n)
+             {
+                 throw new NotImplementedException();
+             }
+
             #endregion
+
+
+
         }
     }
 }

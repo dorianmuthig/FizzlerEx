@@ -21,7 +21,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         public virtual Selector<HtmlNode> Type(NamespacePrefix prefix, string type)
         {
             return prefix.IsSpecific
-                 ? (Selector<HtmlNode>) (nodes => Enumerable.Empty<HtmlNode>()) 
+                 ? (Selector<HtmlNode>)(nodes => Enumerable.Empty<HtmlNode>())
                  : (nodes => nodes.Elements().Where(n => n.Name == type));
         }
 
@@ -34,7 +34,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         public virtual Selector<HtmlNode> Universal(NamespacePrefix prefix)
         {
             return prefix.IsSpecific
-                 ? (Selector<HtmlNode>) (nodes => Enumerable.Empty<HtmlNode>()) 
+                 ? (Selector<HtmlNode>)(nodes => Enumerable.Empty<HtmlNode>())
                  : (nodes => nodes.Elements());
         }
 
@@ -68,7 +68,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         public virtual Selector<HtmlNode> AttributeExists(NamespacePrefix prefix, string name)
         {
             return prefix.IsSpecific
-                 ? (Selector<HtmlNode>) (nodes => Enumerable.Empty<HtmlNode>()) 
+                 ? (Selector<HtmlNode>)(nodes => Enumerable.Empty<HtmlNode>())
                  : (nodes => nodes.Elements().Where(n => n.Attributes[name] != null));
         }
 
@@ -80,10 +80,26 @@ namespace Fizzler.Systems.HtmlAgilityPack
         public virtual Selector<HtmlNode> AttributeExact(NamespacePrefix prefix, string name, string value)
         {
             return prefix.IsSpecific
-                 ? (Selector<HtmlNode>) (nodes => Enumerable.Empty<HtmlNode>()) 
+                 ? (Selector<HtmlNode>)(nodes => Enumerable.Empty<HtmlNode>())
                  : (nodes => from n in nodes.Elements()
                              let a = n.Attributes[name]
                              where a != null && a.Value == value
+                             select n);
+        } 
+        
+        
+        /// <summary>
+        /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>
+        /// that represents an element without the given attribute <paramref name="name"/>
+        /// or with a different value <paramref name="value"/>.
+        /// </summary>
+        public virtual Selector<HtmlNode> AttributeNotEqual(NamespacePrefix prefix, string name, string value)
+        {
+            return prefix.IsSpecific
+                 ? (Selector<HtmlNode>)(nodes => Enumerable.Empty<HtmlNode>())
+                 : (nodes => from n in nodes.Elements()
+                             let a = n.Attributes[name]
+                             where a == null || a.Value != value
                              select n);
         }
 
@@ -96,7 +112,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         public virtual Selector<HtmlNode> AttributeIncludes(NamespacePrefix prefix, string name, string value)
         {
             return prefix.IsSpecific
-                 ? (Selector<HtmlNode>) (nodes => Enumerable.Empty<HtmlNode>()) 
+                 ? (Selector<HtmlNode>)(nodes => Enumerable.Empty<HtmlNode>())
                  : (nodes => from n in nodes.Elements()
                              let a = n.Attributes[name]
                              where a != null && a.Value.Split(' ').Contains(value)
@@ -112,8 +128,8 @@ namespace Fizzler.Systems.HtmlAgilityPack
         public virtual Selector<HtmlNode> AttributeDashMatch(NamespacePrefix prefix, string name, string value)
         {
             return prefix.IsSpecific || string.IsNullOrEmpty(value)
-                 ? (Selector<HtmlNode>) (nodes => Enumerable.Empty<HtmlNode>()) 
-                 : (nodes => from n in nodes.Elements()                            
+                 ? (Selector<HtmlNode>)(nodes => Enumerable.Empty<HtmlNode>())
+                 : (nodes => from n in nodes.Elements()
                              let a = n.Attributes[name]
                              where a != null && a.Value.Split('-').Contains(value)
                              select n);
@@ -126,8 +142,8 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public Selector<HtmlNode> AttributePrefixMatch(NamespacePrefix prefix, string name, string value)
         {
-            return prefix.IsSpecific || string.IsNullOrEmpty(value) 
-                 ? (Selector<HtmlNode>) (nodes => Enumerable.Empty<HtmlNode>()) 
+            return prefix.IsSpecific || string.IsNullOrEmpty(value)
+                 ? (Selector<HtmlNode>)(nodes => Enumerable.Empty<HtmlNode>())
                  : (nodes => from n in nodes.Elements()
                              let a = n.Attributes[name]
                              where a != null && a.Value.StartsWith(value)
@@ -179,7 +195,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public virtual Selector<HtmlNode> LastChild()
         {
-            return nodes => nodes.Where(n => n.ParentNode.NodeType != HtmlNodeType.Document 
+            return nodes => nodes.Where(n => n.ParentNode.NodeType != HtmlNodeType.Document
                                           && !n.ElementsAfterSelf().Any());
         }
 
@@ -273,5 +289,17 @@ namespace Fizzler.Systems.HtmlAgilityPack
                             where elements.Length == b && elements.First().Equals(n)
                             select n;
         }
+
+
+        public Selector<HtmlNode> Eq(int n)
+        {
+            return nodes =>
+            {
+                var node = nodes.ElementAtOrDefault(n);
+                return node != null ? new[] { node } : Enumerable.Empty<HtmlNode>();
+            };
+        }
+
+
     }
 }

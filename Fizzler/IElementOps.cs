@@ -92,6 +92,14 @@ namespace Fizzler
         /// </summary>
         Selector<TElement> AttributeSubstring(NamespacePrefix prefix, string name, string value);
 
+        /// <summary>
+        /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>
+        /// that represents an element without the given attribute <paramref name="name"/>
+        /// or with a different value. <paramref name="value"/>.
+        /// </summary>
+        Selector<TElement> AttributeNotEqual(NamespacePrefix prefix, string name, string value);
+
+
         //
         // Pseudo-class selectors
         //
@@ -164,6 +172,13 @@ namespace Fizzler
 		/// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
 		/// which represents an element that is the N-th child from bottom up of some other element.
 		/// </summary>
-    	Selector<TElement> NthLastChild(int a, int b);
+        Selector<TElement> NthLastChild(int a, int b);
+
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// which represents the N-th matched element (zero-based).
+        /// </summary>
+        Selector<TElement> Eq(int n);
+
     }
 }

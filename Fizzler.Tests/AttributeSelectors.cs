@@ -127,5 +127,14 @@ namespace Fizzler.Tests
         {
             Assert.AreEqual(0, SelectList("*[class*='']").Count);
         }
+
+        [Test]
+        public void Element_Attr_Not_Equal()
+        {
+            var results = SelectList("p[class!='hiclass']");
+            Assert.AreEqual(2, results.Count);
+            Assert.IsNull(results[0].GetAttributeValue("class", null));
+            Assert.AreEqual("eeeee", results[1].InnerText);
+        }
     }
 }

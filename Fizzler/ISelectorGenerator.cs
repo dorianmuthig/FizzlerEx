@@ -73,6 +73,13 @@ namespace Fizzler
 
         /// <summary>
         /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>
+        /// that represents an element without the given attribute <paramref name="name"/>
+        /// or with a different value <paramref name="value"/>.
+        /// </summary>
+        void AttributeNotEqual(NamespacePrefix prefix, string name, string value);
+
+        /// <summary>
+        /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>
         /// that represents an element with the given attribute <paramref name="name"/>
         /// and whose value is a whitespace-separated list of words, one of 
         /// which is exactly <paramref name="value"/>.
@@ -142,6 +149,12 @@ namespace Fizzler
         /// which represents an element that has no children at all.
         /// </summary>
         void Empty();
+
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// which represents the N-th matched element.
+        /// </summary>
+        void Eq(int n);
 
         //
         // Combinators

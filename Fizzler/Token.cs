@@ -92,6 +92,14 @@ namespace Fizzler
         }
 
         /// <summary>
+        /// Creates a not-equals token.
+        /// </summary>
+        public static Token NotEqual()
+        {
+            return new Token(TokenKind.NotEqual);
+        }
+
+        /// <summary>
         /// Creates a left bracket token.
         /// </summary>
         public static Token LeftBracket()

@@ -171,6 +171,16 @@ namespace Fizzler
 
         /// <summary>
         /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>
+        /// that represents an element without the given attribute <paramref name="name"/>
+        /// or whose value is not equal to <paramref name="value"/>.
+        /// </summary>
+        public void AttributeNotEqual(NamespacePrefix prefix, string name, string value)
+        {
+            Add(Ops.AttributeNotEqual(prefix, name, value));
+        }
+
+        /// <summary>
+        /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>
         /// that represents an element with the given attribute <paramref name="name"/>
         /// and whose value is a whitespace-separated list of words, one of 
         /// which is exactly <paramref name="value"/>.
@@ -316,5 +326,16 @@ namespace Fizzler
         {
             Add(Ops.NthLastChild(a, b));
         }
+
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// which represents the N-th matched element.
+        /// </summary>
+        public void Eq(int n)
+        {
+            Add(Ops.Eq(n));
+        }
+
+
     }
 }

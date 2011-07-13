@@ -237,6 +237,7 @@ namespace Fizzler
             var func = token.Value.Text;
             switch (func)
             {
+                case "eq": Eq(); break;
                 case "nth-child": Nth(); break;
                 case "nth-last-child": NthLast(); break;
                 default:
@@ -276,6 +277,12 @@ namespace Fizzler
             _generator.NthLastChild(1, NthB());
         }
 
+        private void Eq()
+        {
+            _generator.Eq(NthB());
+        }
+
+
         private int NthB()
         {
             return int.Parse(Read(ToTokenSpec(TokenKind.Integer)).Text, CultureInfo.InvariantCulture);
@@ -303,6 +310,7 @@ namespace Fizzler
             {
                 var op = TryRead(
                     ToTokenSpec(Token.Equals()),
+                    ToTokenSpec(TokenKind.NotEqual),
                     ToTokenSpec(TokenKind.Includes),
                     ToTokenSpec(TokenKind.DashMatch),
                     ToTokenSpec(TokenKind.PrefixMatch),
@@ -328,6 +336,7 @@ namespace Fizzler
                         case TokenKind.PrefixMatch: _generator.AttributePrefixMatch(prefix, name, value); break;
                         case TokenKind.SuffixMatch: _generator.AttributeSuffixMatch(prefix, name, value); break;
                         case TokenKind.SubstringMatch: _generator.AttributeSubstring(prefix, name, value); break;
+                        case TokenKind.NotEqual: _generator.AttributeNotEqual(prefix, name, value); break;
                     }
                 }
             }

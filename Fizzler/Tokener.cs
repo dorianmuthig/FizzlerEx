@@ -105,6 +105,7 @@
                     }
                     case '^': // ^=
                     case '$': // $=
+                    case '!': // !=
                     {
                         if (reader.Read() != '=')
                             throw new FormatException(string.Format("Invalid character at position {0}.", reader.Position));
@@ -113,6 +114,7 @@
                         {
                             case '^': yield return Token.PrefixMatch(); break;
                             case '$': yield return Token.SuffixMatch(); break;
+                            case '!': yield return Token.NotEqual(); break;
                         }
                         break;
                     }

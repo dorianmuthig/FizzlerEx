@@ -108,6 +108,14 @@ namespace Fizzler
         /// <summary>
         /// Generates human-readable text of this attribute selector.
         /// </summary>
+        public void AttributeNotEqual(NamespacePrefix prefix, string name, string value)
+        {
+            Add(string.Format(" without the {0} attribute, or with a value not equal to '{1}'", name, value));
+        }
+
+        /// <summary>
+        /// Generates human-readable text of this attribute selector.
+        /// </summary>
         public void AttributeIncludes(NamespacePrefix prefix, string name, string value)
         {
             Add(string.Format(" which have attribute {0} that includes the word '{1}'", name, value));
@@ -236,5 +244,16 @@ namespace Fizzler
         {
             Add(string.Format(" where the element has {0}n+{1}-1 sibling after it", a, b));
         }
+
+        /// <summary>
+        /// Generates human-readable text of this pseudo-class.
+        /// </summary>
+        public void Eq(int n)
+        {
+            Add(string.Format(", take the {0}-th matched element", n));
+        }
+
+
+
     }
 }

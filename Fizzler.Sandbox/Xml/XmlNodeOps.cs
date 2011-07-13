@@ -46,6 +46,14 @@ namespace Fizzler.Systems.XmlNodeQuery
                             where a != null && a.Value == value
                             select n;
         }
+        public virtual Selector<XmlNode> AttributeNotEqual(NamespacePrefix prefix, string name, string value)
+        {
+            // TODO Proper namespace support
+            return nodes => from n in nodes.Elements()
+                            let a = n.Attributes[name]
+                            where a == null || a.Value != value
+                            select n;
+        }
 
         public virtual Selector<XmlNode> AttributeIncludes(NamespacePrefix prefix, string name, string value)
         {
@@ -205,5 +213,17 @@ namespace Fizzler.Systems.XmlNodeQuery
                             where elements.Length == b && elements.First().Equals(n)
                             select n;
         }
+
+
+        public Selector<XmlNode> Eq(int n)
+        {
+            return nodes =>
+            {
+                var node = nodes.ElementAtOrDefault(n);
+                return node != null ? new[] { node } : Enumerable.Empty<XmlNode>();
+            };
+        }
+
+
     }
 }

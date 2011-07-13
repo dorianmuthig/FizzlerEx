@@ -117,6 +117,15 @@ namespace Fizzler
         /// <summary>
         /// Delegates to <see cref="Primary"/> then <see cref="Secondary"/> generator.
         /// </summary>
+        public void AttributeNotEqual(NamespacePrefix prefix, string name, string value)
+        {
+            Primary.AttributeNotEqual(prefix, name, value);
+            Secondary.AttributeNotEqual(prefix, name, value);
+        }
+
+        /// <summary>
+        /// Delegates to <see cref="Primary"/> then <see cref="Secondary"/> generator.
+        /// </summary>
         public void AttributeIncludes(NamespacePrefix prefix, string name, string value)
         {
             Primary.AttributeIncludes(prefix, name, value);
@@ -248,5 +257,17 @@ namespace Fizzler
             Primary.NthLastChild(a, b);
             Secondary.NthLastChild(a, b);
         }
+
+
+        /// <summary>
+        /// Delegates to <see cref="Primary"/> then <see cref="Secondary"/> generator.
+        /// </summary>
+        public void Eq(int n)
+        {
+            Primary.Eq(n);
+            Secondary.Eq(n);
+        }
+
+
     }
 }

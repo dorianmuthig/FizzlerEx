@@ -85,9 +85,9 @@ namespace Fizzler.Systems.HtmlAgilityPack
                              let a = n.Attributes[name]
                              where a != null && a.Value == value
                              select n);
-        } 
-        
-        
+        }
+
+
         /// <summary>
         /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>
         /// that represents an element without the given attribute <paramref name="name"/>
@@ -300,6 +300,15 @@ namespace Fizzler.Systems.HtmlAgilityPack
             };
         }
 
+
+        public Selector<HtmlNode> Has(ISelectorGenerator subgenerator)
+        {
+            var castedGenerator = (SelectorGenerator<HtmlNode>)subgenerator;
+
+            var compiled =castedGenerator.Selector;
+
+            return nodes => nodes.Where(n => compiled(new[] { n }).Any());
+        }
 
     }
 }

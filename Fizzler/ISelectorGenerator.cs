@@ -170,6 +170,13 @@ namespace Fizzler
         void SelectParent();
 
 
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// which represents an element that contains the specified text.
+        /// </summary>
+        void Contains(string text);
+
+
         //
         // Combinators
         //

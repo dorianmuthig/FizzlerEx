@@ -237,5 +237,12 @@ namespace Fizzler.Systems.XmlNodeQuery
             return nodes => nodes.Select(x => x.ParentNode);
         }
 
+
+        public Selector<XmlNode> Contains(string text)
+        {
+            return nodes => nodes.Where(x=>x.InnerText.Contains(text));
+        }
+
+
     }
 }

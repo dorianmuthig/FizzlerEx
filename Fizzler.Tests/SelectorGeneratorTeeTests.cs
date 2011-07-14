@@ -395,6 +395,11 @@ namespace Fizzler.Tests
                 OnInvoked(MethodBase.GetCurrentMethod());
             }
 
+            public void Contains(string text)
+            {
+                OnInvoked(MethodBase.GetCurrentMethod(), text);
+            }
+
             public ISelectorGenerator CreateNew()
             {
                 OnInvoked(MethodBase.GetCurrentMethod());

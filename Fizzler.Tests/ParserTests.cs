@@ -291,13 +291,13 @@ namespace Fizzler.Tests
                 new object[] { expected1 });
         }
 
-        private static void Test<T1, T2>(string input, 
-            Func<TestSelectorGenerator, T1> actual1, T1 expected1, 
+        private static void Test<T1, T2>(string input,
+            Func<TestSelectorGenerator, T1> actual1, T1 expected1,
             Func<TestSelectorGenerator, T2> actual2, T2 expected2)
         {
-            Test(input, 
-                new Func<TestSelectorGenerator, object>[] {g => actual1(g), g => actual2(g)}, 
-                new object[] {expected1, expected2});
+            Test(input,
+                new Func<TestSelectorGenerator, object>[] { g => actual1(g), g => actual2(g) },
+                new object[] { expected1, expected2 });
         }
 
         private static void Test<T1, T2, T3>(string input,
@@ -310,8 +310,8 @@ namespace Fizzler.Tests
                 new object[] { expected1, expected2, expected3 });
         }
 
-        private static void Test(string input, 
-            IEnumerable<Func<TestSelectorGenerator, object>> actuals, 
+        private static void Test(string input,
+            IEnumerable<Func<TestSelectorGenerator, object>> actuals,
             IEnumerable<object> expectations)
         {
             var generator = new TestSelectorGenerator();
@@ -319,7 +319,7 @@ namespace Fizzler.Tests
             using (var actual = actuals.GetEnumerator())
             using (var expected = expectations.GetEnumerator())
             {
-                while(actual.MoveNext())
+                while (actual.MoveNext())
                 {
                     Assert.That(expected.MoveNext(), Is.True, "Missing expectation");
                     Assert.That(actual.Current(generator), Is.EqualTo(expected.Current));
@@ -490,32 +490,36 @@ namespace Fizzler.Tests
                 throw new NotImplementedException();
             }
 
-             public void NthLastChild(int a, int b)
-             {
-                 throw new NotImplementedException();
-             }
+            public void NthLastChild(int a, int b)
+            {
+                throw new NotImplementedException();
+            }
 
-             public void Eq(int n)
-             {
-                 throw new NotImplementedException();
-             }
+            public void Eq(int n)
+            {
+                throw new NotImplementedException();
+            }
 
-             public void Has(ISelectorGenerator subgenerator)
-             {
-                 throw new NotImplementedException();
-             }
+            public void Has(ISelectorGenerator subgenerator)
+            {
+                throw new NotImplementedException();
+            }
 
-             public void SelectParent()
-             {
-                 throw new NotImplementedException();
-             }
+            public void SelectParent()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Contains(string text)
+            {
+                throw new NotImplementedException();
+            }
 
 
-
-             public ISelectorGenerator CreateNew()
-             {
-                 throw new NotImplementedException();
-             }
+            public ISelectorGenerator CreateNew()
+            {
+                throw new NotImplementedException();
+            }
 
 
             #endregion

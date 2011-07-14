@@ -280,6 +280,10 @@ namespace Fizzler.Systems.WinForms
             throw new NotImplementedException();
         }
 
+        public Selector<Control> Contains(string text)
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }

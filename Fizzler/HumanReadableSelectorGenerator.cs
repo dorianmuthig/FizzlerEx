@@ -270,6 +270,16 @@ namespace Fizzler
             Add(string.Format(", then take their parents"));
         }
 
+
+        /// <summary>
+        /// Generates human-readable text of this pseudo-class.
+        /// </summary>
+        public void Contains(string text)
+        {
+            Add(string.Format(" where the inner text contains '{0}'", text));
+        }
+
+
         /// <summary>
         /// Creates an empty instance of the same type of the current generator.
         /// </summary>

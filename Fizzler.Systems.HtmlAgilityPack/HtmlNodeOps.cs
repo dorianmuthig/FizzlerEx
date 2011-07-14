@@ -315,6 +315,11 @@ namespace Fizzler.Systems.HtmlAgilityPack
             return nodes => nodes.Select(x => x.ParentNode);
         }
 
+        public Selector<HtmlNode> Contains(string text)
+        {
+            return nodes => nodes.Where(x => x.InnerText.Contains(text));
+        }
+
 
     }
 }

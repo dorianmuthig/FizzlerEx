@@ -286,6 +286,15 @@ namespace Fizzler
             Secondary.SelectParent();
         }
 
+        /// <summary>
+        /// Delegates to <see cref="Primary"/> then <see cref="Secondary"/> generator.
+        /// </summary>
+        public void Contains(string text)
+        {
+            Primary.Contains(text);
+            Secondary.Contains(text);
+        }
+
 
         /// <summary>
         /// Creates an empty instance of the same type of the current generator.

@@ -251,6 +251,7 @@ namespace Fizzler
                 case "nth-child": Nth(); break;
                 case "nth-last-child": NthLast(); break;
                 case "has": Has(); break;
+                case "contains": Contains(); break;
                 default:
                     {
                         throw new FormatException(string.Format(
@@ -261,6 +262,14 @@ namespace Fizzler
             Read(ToTokenSpec(Token.RightParenthesis()));
             return true;
         }
+
+
+        private void Contains()
+        {
+            var text = Read(ToTokenSpec(TokenKind.String)).Text;
+            _generator.Contains(text);
+        }
+
 
         private void Has()
         {

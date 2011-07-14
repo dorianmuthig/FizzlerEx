@@ -15,13 +15,15 @@ namespace DummySandbox
             var div = doc.CreateElement("div");
             div.InnerHtml = (@"
 
-<span></span>
-<span><b></b></span>
-
+<div>
+<span><b>qui</b></span>
+<span><b>quo</b></span>
+<span><b>qua</b></span>
+</div>
 
 ");
 
-            var r = div.QuerySelectorAll("span:has(b)");
+            var r = div.QuerySelectorAll("span:contains('quo')");
 
         }
     }

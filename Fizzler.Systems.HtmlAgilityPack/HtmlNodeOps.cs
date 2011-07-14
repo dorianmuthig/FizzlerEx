@@ -310,5 +310,11 @@ namespace Fizzler.Systems.HtmlAgilityPack
             return nodes => nodes.Where(n => compiled(new[] { n }).Any());
         }
 
+        public Selector<HtmlNode> SelectParent()
+        {
+            return nodes => nodes.Select(x => x.ParentNode);
+        }
+
+
     }
 }

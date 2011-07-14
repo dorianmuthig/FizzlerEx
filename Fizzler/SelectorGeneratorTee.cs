@@ -278,6 +278,16 @@ namespace Fizzler
         }
 
         /// <summary>
+        /// Delegates to <see cref="Primary"/> then <see cref="Secondary"/> generator.
+        /// </summary>
+        public void SelectParent()
+        {
+            Primary.SelectParent();
+            Secondary.SelectParent();
+        }
+
+
+        /// <summary>
         /// Creates an empty instance of the same type of the current generator.
         /// </summary>
         public ISelectorGenerator CreateNew() {

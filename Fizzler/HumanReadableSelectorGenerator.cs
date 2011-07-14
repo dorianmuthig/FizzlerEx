@@ -263,12 +263,21 @@ namespace Fizzler
         }
 
         /// <summary>
+        /// Generates human-readable text of this pseudo-class.
+        /// </summary>
+        public void SelectParent()
+        {
+            Add(string.Format(", then take their parents"));
+        }
+
+        /// <summary>
         /// Creates an empty instance of the same type of the current generator.
         /// </summary>
         public ISelectorGenerator CreateNew()
         {
             return new HumanReadableSelectorGenerator();
         }
+
 
 
     }

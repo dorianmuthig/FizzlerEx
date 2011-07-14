@@ -390,6 +390,11 @@ namespace Fizzler.Tests
                 OnInvoked(MethodBase.GetCurrentMethod(), subgenerator);
             }
 
+            public void SelectParent()
+            {
+                OnInvoked(MethodBase.GetCurrentMethod());
+            }
+
             public ISelectorGenerator CreateNew()
             {
                 OnInvoked(MethodBase.GetCurrentMethod());

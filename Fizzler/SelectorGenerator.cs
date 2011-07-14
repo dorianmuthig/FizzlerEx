@@ -346,6 +346,15 @@ namespace Fizzler
         }
 
         /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// which represents the parents of the matched elements.
+        /// </summary>
+        public void SelectParent()
+        {
+            Add(Ops.SelectParent());
+        }
+
+        /// <summary>
         /// Creates an empty instance of the same type of the current generator.
         /// </summary>
         public ISelectorGenerator CreateNew()

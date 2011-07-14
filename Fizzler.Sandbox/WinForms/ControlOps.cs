@@ -275,6 +275,11 @@ namespace Fizzler.Systems.WinForms
             throw new NotImplementedException();
         }
 
+        public Selector<Control> SelectParent()
+        {
+            throw new NotImplementedException();
+        }
+
 
     }
 }

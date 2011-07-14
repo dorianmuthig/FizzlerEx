@@ -505,6 +505,11 @@ namespace Fizzler.Tests
                  throw new NotImplementedException();
              }
 
+             public void SelectParent()
+             {
+                 throw new NotImplementedException();
+             }
+
 
 
              public ISelectorGenerator CreateNew()

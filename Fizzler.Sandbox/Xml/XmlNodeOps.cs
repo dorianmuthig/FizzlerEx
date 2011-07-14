@@ -72,7 +72,7 @@ namespace Fizzler.Systems.XmlNodeQuery
                  : (nodes => from n in nodes.Elements()
                              let a = n.Attributes[name]
                              where a != null && a.Value.Split('-').Contains(value)
-                                    select n);
+                             select n);
         }
 
         public virtual Selector<XmlNode> AttributePrefixMatch(NamespacePrefix prefix, string name, string value)
@@ -231,6 +231,11 @@ namespace Fizzler.Systems.XmlNodeQuery
             throw new NotImplementedException();
         }
 
+
+        public Selector<XmlNode> SelectParent()
+        {
+            return nodes => nodes.Select(x => x.ParentNode);
+        }
 
     }
 }

@@ -222,6 +222,7 @@ namespace Fizzler
                     case "last-child": _generator.LastChild(); break;
                     case "only-child": _generator.OnlyChild(); break;
                     case "empty": _generator.Empty(); break;
+                    case "select-parent": _generator.SelectParent(); break;
                     default:
                         {
                             throw new FormatException(string.Format(

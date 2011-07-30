@@ -79,11 +79,13 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public virtual Selector<HtmlNode> AttributeExact(NamespacePrefix prefix, string name, string value)
         {
+            var withoutAttribute = string.IsNullOrEmpty(value);
+
             return prefix.IsSpecific
                  ? (Selector<HtmlNode>)(nodes => Enumerable.Empty<HtmlNode>())
                  : (nodes => from n in nodes.Elements()
                              let a = n.Attributes[name]
-                             where a != null && a.Value == value
+                             where withoutAttribute ? (a == null || string.IsNullOrEmpty(a.Value)) : (a != null && a.Value == value)
                              select n);
         }
 

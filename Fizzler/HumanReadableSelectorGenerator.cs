@@ -102,7 +102,10 @@ namespace Fizzler
         /// </summary>
         public void AttributeExact(NamespacePrefix prefix, string name, string value)
         {
-            Add(string.Format(" which have attribute {0} with a value of '{1}'", name, value));
+            if (string.IsNullOrEmpty(value))
+                Add(string.Format(" without a {0} attribute, or with an empty value", name));
+            else
+                Add(string.Format(" which have attribute {0} with a value of '{1}'", name, value));
         }
 
         /// <summary>

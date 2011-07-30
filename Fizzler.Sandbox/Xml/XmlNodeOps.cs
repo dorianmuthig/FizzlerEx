@@ -40,10 +40,12 @@ namespace Fizzler.Systems.XmlNodeQuery
 
         public virtual Selector<XmlNode> AttributeExact(NamespacePrefix prefix, string name, string value)
         {
+            var withoutAttribute = string.IsNullOrEmpty(value);
+
             // TODO Proper namespace support
             return nodes => from n in nodes.Elements()
                             let a = n.Attributes[name]
-                            where a != null && a.Value == value
+                            where withoutAttribute ? (a == null || string.IsNullOrEmpty(a.Value)) : (a != null && a.Value == value)
                             select n;
         }
         public virtual Selector<XmlNode> AttributeNotEqual(NamespacePrefix prefix, string name, string value)
@@ -240,7 +242,7 @@ namespace Fizzler.Systems.XmlNodeQuery
 
         public Selector<XmlNode> Contains(string text)
         {
-            return nodes => nodes.Where(x=>x.InnerText.Contains(text));
+            return nodes => nodes.Where(x => x.InnerText.Contains(text));
         }
 
 

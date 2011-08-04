@@ -251,6 +251,7 @@ namespace Fizzler
                 case "nth-child": Nth(); break;
                 case "nth-last-child": NthLast(); break;
                 case "has": Has(); break;
+                case "not": Not(); break;
                 case "contains": Contains(); break;
                 default:
                     {
@@ -277,6 +278,14 @@ namespace Fizzler
             var inner = new Parser(_reader, subgenerator, false);
             inner.Parse();
             _generator.Has(subgenerator);
+        }
+
+        private void Not()
+        {
+            var subgenerator = _generator.CreateNew();
+            var inner = new Parser(_reader, subgenerator, false);
+            inner.Parse();
+            _generator.Not(subgenerator);
         }
 
         private void Nth()

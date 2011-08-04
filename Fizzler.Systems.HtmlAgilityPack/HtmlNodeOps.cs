@@ -312,6 +312,19 @@ namespace Fizzler.Systems.HtmlAgilityPack
             return nodes => nodes.Where(n => compiled(new[] { n }).Any());
         }
 
+        public Selector<HtmlNode> Not(ISelectorGenerator subgenerator)
+        {
+            var castedGenerator = (SelectorGenerator<HtmlNode>)subgenerator;
+
+            var compiled = castedGenerator.Selector;
+
+            return nodes =>
+            {
+                var matches = compiled(nodes.Select(x => x.ParentNode)).ToList();
+                return nodes.Except(matches);
+            };
+        }
+
         public Selector<HtmlNode> SelectParent()
         {
             return nodes => nodes.Select(x => x.ParentNode);
@@ -321,6 +334,9 @@ namespace Fizzler.Systems.HtmlAgilityPack
         {
             return nodes => nodes.Where(x => x.InnerText.Contains(text));
         }
+
+
+
 
 
     }

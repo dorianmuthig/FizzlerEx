@@ -13,7 +13,7 @@ using Fizzler.Systems.HtmlAgilityPack;
 using HtmlAgilityPack;
 using Mannex.Net;
 using Microsoft.VisualBasic;
-using HtmlDocument=HtmlAgilityPack.HtmlDocument;
+using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 
 namespace VisualFizzler
 {
@@ -53,8 +53,8 @@ namespace VisualFizzler
         {
             Uri url = null;
 
-            var input = _lastKnownGoodImportedUrl != null 
-                      ? _lastKnownGoodImportedUrl.ToString() 
+            var input = _lastKnownGoodImportedUrl != null
+                      ? _lastKnownGoodImportedUrl.ToString()
                       : string.Empty;
 
             do
@@ -199,7 +199,7 @@ namespace VisualFizzler
         private static void HighlightMarkup(RichTextBox rtb, Color tagColor, Color tagNameColor, Color attributeNameColor)
         {
             Debug.Assert(rtb != null);
-
+            var stopwatch = Stopwatch.StartNew();
             foreach (Match tag in _tagExpression.Matches(rtb.Text))
             {
                 Highlight(rtb, tag.Index, tag.Length, tagColor, null, null);
@@ -207,14 +207,17 @@ namespace VisualFizzler
                 var name = tag.Groups["t"];
                 Highlight(rtb, name.Index, name.Length, tagNameColor, null, null);
 
-                var attributes = Regex.Matches(tag.Value, 
-                    @"\b([a-z]+)\s*=\s*(?:""[^""]*""|'[^']*'|[^'"">\s]+)", 
+                var attributes = Regex.Matches(tag.Value,
+                    @"\b([a-z]+)\s*=\s*(?:""[^""]*""|'[^']*'|[^'"">\s]+)",
                     RegexOptions.IgnoreCase
                     | RegexOptions.Singleline
                     | RegexOptions.CultureInvariant);
 
                 foreach (var attribute in attributes.Cast<Match>().Select(m => m.Groups[1]))
                     Highlight(rtb, tag.Index + attribute.Index, attribute.Length, attributeNameColor, null, null);
+
+
+                if (stopwatch.ElapsedMilliseconds > 5000) break;
             }
         }
 
@@ -242,9 +245,9 @@ namespace VisualFizzler
         {
             var input = tb.Text.Trim();
             tb.ForeColor = SystemColors.WindowText;
-            
+
             var elements = new HtmlNode[0];
-            
+
             if (string.IsNullOrEmpty(input))
             {
                 status.Text = "Ready";
@@ -263,9 +266,9 @@ namespace VisualFizzler
                     // the element selector in a single pass so go the bare metal way 
                     // here to make all the parties to talk to each other.
                     //
-                    
+
                     var generator = new SelectorGenerator<HtmlNode>(new HtmlNodeOps());
-                    Parser.Parse(input,generator);
+                    Parser.Parse(input, generator);
                     if (document != null)
                         elements = generator.Selector(Enumerable.Repeat(document.DocumentNode, 1)).ToArray();
                     hb.Text = null;
@@ -278,10 +281,10 @@ namespace VisualFizzler
                     hb.Text = "Oops! " + e.Message;
                 }
             }
-            
+
             if (oldMatches != null)
                 Highlight(rtb, oldMatches, null, SystemColors.Info, null);
-        
+
             lb.BeginUpdate();
             try
             {
@@ -290,7 +293,7 @@ namespace VisualFizzler
                     return new Match[0];
 
                 var html = rtb.Text;
-                var matches  = new List<Match>(elements.Length);
+                var matches = new List<Match>(elements.Length);
                 foreach (var element in elements)
                 {
                     var index = rtb.GetFirstCharIndexFromLine(element.Line - 1) + element.LinePosition - 1;
@@ -298,11 +301,11 @@ namespace VisualFizzler
                     if (match.Success)
                         matches.Add(match);
                 }
-                
+
                 Highlight(rtb, matches, null, Color.Yellow, null);
-                
+
                 lb.Items.AddRange(elements.Select(n => n.GetBeginTagString()).ToArray());
-                
+
                 return matches.ToArray();
             }
             finally

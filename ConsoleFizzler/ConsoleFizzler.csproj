@@ -75,7 +75,6 @@
     </Compile>
     <Compile Include="CommandLine.cs" />
     <Compile Include="Command.cs" />
-    <Compile Include="ExplainCommand.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="NameValueCollectionExtensions.cs" />
     <Compile Include="NodeOutputFormat.cs" />

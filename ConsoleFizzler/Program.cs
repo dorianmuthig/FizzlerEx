@@ -37,7 +37,6 @@
 		    var commands = new[] 
             {
 	            new CommandNames(() => new SelectCommand(), Aliases("select", "sel")),
-	            new CommandNames(() => new ExplainCommand(), Aliases("explain", "describe", "desc")),
 	        }
 		    .SelectMany(e => e.Value.Select(v => new KeyValuePair<string, Func<ICommand>>(v, e.Key)))
 		    .ToDictionary(e => e.Key, e => e.Value);

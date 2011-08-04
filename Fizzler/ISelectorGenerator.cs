@@ -155,12 +155,18 @@ namespace Fizzler
         /// which represents the N-th matched element.
         /// </summary>
         void Eq(int n);
-        
+
         /// <summary>
         /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
         /// which represents an element that contains an element that matches the query specified by the argument.
         /// </summary>
         void Has(ISelectorGenerator generator);
+
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// which represents an element that does not match the specified selector.
+        /// </summary>
+        void Not(ISelectorGenerator generator);
 
 
         /// <summary>

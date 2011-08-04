@@ -347,6 +347,15 @@ namespace Fizzler
 
         /// <summary>
         /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// which represents an element that does not match the specified selector.
+        /// </summary>
+        public void Not(ISelectorGenerator subgenerator)
+        {
+            Add(Ops.Not(subgenerator));
+        }
+
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
         /// which represents the parents of the matched elements.
         /// </summary>
         public void SelectParent()
@@ -371,6 +380,7 @@ namespace Fizzler
         {
             return new SelectorGenerator<TElement>(Ops, _equalityComparer);
         }
+
 
     }
 }

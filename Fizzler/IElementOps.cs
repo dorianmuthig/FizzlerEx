@@ -188,6 +188,12 @@ namespace Fizzler
 
         /// <summary>
         /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// which represents an element that does not match the specified query.
+        /// </summary>
+        Selector<TElement> Not(ISelectorGenerator subgenerator);
+
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
         /// which represents the parents of the matched elements.
         /// </summary>
         Selector<TElement> SelectParent();

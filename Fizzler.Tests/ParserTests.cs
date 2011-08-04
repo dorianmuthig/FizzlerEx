@@ -505,6 +505,11 @@ namespace Fizzler.Tests
                 throw new NotImplementedException();
             }
 
+            public void Not(ISelectorGenerator generator)
+            {
+                throw new NotImplementedException();
+            }
+
             public void SelectParent()
             {
                 throw new NotImplementedException();
@@ -523,6 +528,8 @@ namespace Fizzler.Tests
 
 
             #endregion
+
+
 
 
 

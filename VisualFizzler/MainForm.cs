@@ -265,12 +265,10 @@ namespace VisualFizzler
                     //
                     
                     var generator = new SelectorGenerator<HtmlNode>(new HtmlNodeOps());
-                    var helper = new HumanReadableSelectorGenerator();
-                    Parser.Parse(input, new SelectorGeneratorTee(generator, helper));
+                    Parser.Parse(input,generator);
                     if (document != null)
                         elements = generator.Selector(Enumerable.Repeat(document.DocumentNode, 1)).ToArray();
-                    hb.Text = helper.Text;
-
+                    hb.Text = null;
                     status.Text = "Matches: " + elements.Length.ToString("N0");
                 }
                 catch (FormatException e)

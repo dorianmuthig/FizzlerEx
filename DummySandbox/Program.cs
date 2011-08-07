@@ -12,10 +12,10 @@ namespace DummySandbox
         static void Main(string[] args)
         {
             var doc = new HtmlDocument();
-            var div = doc.CreateElement("div");
-            div.InnerHtml = (@"
+            var p = doc.CreateElement("p");
+            p.InnerHtml = (@"
 
-<div>
+<div class=asdf>
 <span><b>qui</b></span>
 <span><b>quo</b></span>
 <span><b>qua</b></span>
@@ -23,7 +23,8 @@ namespace DummySandbox
 
 ");
 
-            var r = div.QuerySelectorAll("span:contains('quo')");
+            p.QuerySelectorAll("/ * *");
+          //  var r = p.QuerySelector(".asdf").QuerySelectorAll(":select-parent");
 
         }
     }

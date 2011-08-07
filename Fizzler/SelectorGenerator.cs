@@ -15,6 +15,7 @@ namespace Fizzler
     {
         private readonly IEqualityComparer<TElement> _equalityComparer;
         private readonly Stack<Selector<TElement>> _selectors;
+        private bool anchorToRoot;
 
         /// <summary>
         /// Initializes a new instance of this object with an instance
@@ -86,6 +87,7 @@ namespace Fizzler
         {
             _selectors.Clear();
             Selector = null;
+            anchorToRoot = false;
         }
 
         /// <summary>
@@ -104,7 +106,7 @@ namespace Fizzler
         public virtual void OnClose()
         {
             var sum = GetSelectors().Aggregate((a, b) => (elements => a(elements).Concat(b(elements))));
-            var normalize = Ops.Descendant();
+            var normalize = anchorToRoot ? (x => x) : Ops.Descendant();
             Selector = elements => sum(normalize(elements)).Distinct(_equalityComparer);
             _selectors.Clear();
         }
@@ -381,6 +383,11 @@ namespace Fizzler
             return new SelectorGenerator<TElement>(Ops, _equalityComparer);
         }
 
+
+        public void AnchorToRoot()
+        {
+            anchorToRoot = true;
+        }
 
     }
 }

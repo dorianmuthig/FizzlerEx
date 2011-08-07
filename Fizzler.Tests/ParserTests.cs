@@ -526,10 +526,12 @@ namespace Fizzler.Tests
                 throw new NotImplementedException();
             }
 
+            public void AnchorToRoot()
+            {
+                throw new NotImplementedException();
+            }
 
             #endregion
-
-
 
 
 

@@ -226,5 +226,7 @@ namespace Fizzler
         /// Creates an empty instance of the same type of the current generator.
         /// </summary>
         ISelectorGenerator CreateNew();
+
+        void AnchorToRoot();
     }
 }

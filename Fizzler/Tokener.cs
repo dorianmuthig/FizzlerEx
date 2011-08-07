@@ -129,7 +129,8 @@
                     case ']':  yield return Token.RightBracket(); break;
                     case ')':  yield return Token.RightParenthesis(); break;
                     case '+': yield return Token.Plus(); break;
-                    case '>':  yield return Token.Greater(); break;
+                    case '>': yield return Token.Greater(); break;
+                    case '/': yield return Token.Slash(); break;
                     case '#':  yield return Token.Hash(ParseHash(reader)); break;
                     //
                     // Single- or double-quoted strings

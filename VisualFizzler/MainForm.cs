@@ -31,6 +31,9 @@ namespace VisualFizzler
 
         public MainForm()
         {
+            if (!DesignMode)
+                this.Font = SystemFonts.MessageBoxFont;
+
             InitializeComponent();
         }
 

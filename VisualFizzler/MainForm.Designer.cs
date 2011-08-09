@@ -38,9 +38,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this._selectorBox = new System.Windows.Forms.TextBox();
-            this._helpBox = new System.Windows.Forms.TextBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this._matchBox = new System.Windows.Forms.ListBox();
             this._documentBox = new System.Windows.Forms.RichTextBox();
@@ -49,14 +47,12 @@
             this._openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this._toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.fizzlerExWebSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.errorText = new System.Windows.Forms.ToolStripStatusLabel();
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this._menuStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.splitContainer3.Panel1.SuspendLayout();
-            this.splitContainer3.Panel2.SuspendLayout();
-            this.splitContainer3.SuspendLayout();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
@@ -134,62 +130,27 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.splitContainer3);
+            this.splitContainer1.Panel1.Controls.Add(this._selectorBox);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(658, 437);
-            this.splitContainer1.SplitterDistance = 79;
+            this.splitContainer1.SplitterDistance = 25;
             this.splitContainer1.SplitterWidth = 3;
             this.splitContainer1.TabIndex = 1;
-            // 
-            // splitContainer3
-            // 
-            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer3.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer3.Margin = new System.Windows.Forms.Padding(2);
-            this.splitContainer3.Name = "splitContainer3";
-            // 
-            // splitContainer3.Panel1
-            // 
-            this.splitContainer3.Panel1.Controls.Add(this._selectorBox);
-            // 
-            // splitContainer3.Panel2
-            // 
-            this.splitContainer3.Panel2.Controls.Add(this._helpBox);
-            this.splitContainer3.Size = new System.Drawing.Size(658, 79);
-            this.splitContainer3.SplitterDistance = 233;
-            this.splitContainer3.SplitterWidth = 3;
-            this.splitContainer3.TabIndex = 0;
-            this._toolTip.SetToolTip(this.splitContainer3, "Description of entered CSS selectors");
             // 
             // _selectorBox
             // 
             this._selectorBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this._selectorBox.Location = new System.Drawing.Point(0, 0);
             this._selectorBox.Margin = new System.Windows.Forms.Padding(2);
-            this._selectorBox.Multiline = true;
             this._selectorBox.Name = "_selectorBox";
             this._selectorBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this._selectorBox.Size = new System.Drawing.Size(233, 79);
+            this._selectorBox.Size = new System.Drawing.Size(658, 20);
             this._selectorBox.TabIndex = 1;
             this._toolTip.SetToolTip(this._selectorBox, "Enter CSS selector");
             this._selectorBox.TextChanged += new System.EventHandler(this.SelectorBox_TextChanged);
-            // 
-            // _helpBox
-            // 
-            this._helpBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._helpBox.Location = new System.Drawing.Point(0, 0);
-            this._helpBox.Margin = new System.Windows.Forms.Padding(2);
-            this._helpBox.Multiline = true;
-            this._helpBox.Name = "_helpBox";
-            this._helpBox.ReadOnly = true;
-            this._helpBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this._helpBox.Size = new System.Drawing.Size(422, 79);
-            this._helpBox.TabIndex = 0;
-            this._toolTip.SetToolTip(this._helpBox, "Description of entered CSS selector");
             // 
             // splitContainer2
             // 
@@ -206,7 +167,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this._documentBox);
-            this.splitContainer2.Size = new System.Drawing.Size(658, 355);
+            this.splitContainer2.Size = new System.Drawing.Size(658, 409);
             this.splitContainer2.SplitterDistance = 250;
             this.splitContainer2.SplitterWidth = 3;
             this.splitContainer2.TabIndex = 0;
@@ -218,7 +179,7 @@
             this._matchBox.Location = new System.Drawing.Point(0, 0);
             this._matchBox.Margin = new System.Windows.Forms.Padding(2);
             this._matchBox.Name = "_matchBox";
-            this._matchBox.Size = new System.Drawing.Size(250, 355);
+            this._matchBox.Size = new System.Drawing.Size(250, 409);
             this._matchBox.TabIndex = 0;
             // 
             // _documentBox
@@ -230,7 +191,7 @@
             this._documentBox.Margin = new System.Windows.Forms.Padding(2);
             this._documentBox.Name = "_documentBox";
             this._documentBox.ReadOnly = true;
-            this._documentBox.Size = new System.Drawing.Size(405, 355);
+            this._documentBox.Size = new System.Drawing.Size(405, 409);
             this._documentBox.TabIndex = 4;
             this._documentBox.Text = "";
             this._documentBox.WordWrap = false;
@@ -238,18 +199,18 @@
             // _status
             // 
             this._status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.errorText,
             this._statusLabel});
             this._status.Location = new System.Drawing.Point(0, 461);
             this._status.Name = "_status";
             this._status.Padding = new System.Windows.Forms.Padding(1, 0, 10, 0);
             this._status.Size = new System.Drawing.Size(658, 22);
             this._status.TabIndex = 1;
-            this._status.Text = "statusStrip1";
             // 
             // _statusLabel
             // 
             this._statusLabel.Name = "_statusLabel";
-            this._statusLabel.Size = new System.Drawing.Size(647, 17);
+            this._statusLabel.Size = new System.Drawing.Size(616, 17);
             this._statusLabel.Spring = true;
             this._statusLabel.Text = "Ready";
             this._statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -266,6 +227,11 @@
             this.fizzlerExWebSiteToolStripMenuItem.Text = "FizzlerEx web site";
             this.fizzlerExWebSiteToolStripMenuItem.Click += new System.EventHandler(this.fizzlerExWebSiteToolStripMenuItem_Click);
             // 
+            // errorText
+            // 
+            this.errorText.Name = "errorText";
+            this.errorText.Size = new System.Drawing.Size(0, 17);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -281,13 +247,9 @@
             this._menuStrip.ResumeLayout(false);
             this._menuStrip.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
-            this.splitContainer3.Panel1.ResumeLayout(false);
-            this.splitContainer3.Panel1.PerformLayout();
-            this.splitContainer3.Panel2.ResumeLayout(false);
-            this.splitContainer3.Panel2.PerformLayout();
-            this.splitContainer3.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
@@ -314,10 +276,9 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.ListBox _matchBox;
         private System.Windows.Forms.RichTextBox _documentBox;
-        private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.TextBox _selectorBox;
-        private System.Windows.Forms.TextBox _helpBox;
         private System.Windows.Forms.ToolStripMenuItem fizzlerExWebSiteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel errorText;
     }
 }
 

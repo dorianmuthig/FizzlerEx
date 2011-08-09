@@ -181,10 +181,6 @@ namespace VisualFizzler
             Evaluate();
         }
 
-        private void HelpContents_Click(object sender, EventArgs e)
-        {
-            Process.Start("http://fizzler.googlecode.com/");
-        }
 
         private void Open(HtmlDocument document)
         {
@@ -312,6 +308,11 @@ namespace VisualFizzler
             {
                 lb.EndUpdate();
             }
+        }
+
+        private void fizzlerExWebSiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://fizzlerex.codeplex.com/");
         }
     }
 }

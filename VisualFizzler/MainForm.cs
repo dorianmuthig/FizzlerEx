@@ -234,10 +234,10 @@ namespace VisualFizzler
 
         private void Evaluate()
         {
-            _selectorMatches = Evaluate(_document, _selectorBox, _matchBox, _helpBox, _statusLabel, _selectorMatches, _documentBox);
+            _selectorMatches = Evaluate(_document, _selectorBox, _matchBox, errorText, _statusLabel, _selectorMatches, _documentBox);
         }
 
-        private static Match[] Evaluate(HtmlDocument document, Control tb, ListBox lb, Control hb, ToolStripItem status, IEnumerable<Match> oldMatches, RichTextBox rtb)
+        private static Match[] Evaluate(HtmlDocument document, Control tb, ListBox lb, ToolStripStatusLabel hb, ToolStripItem status, IEnumerable<Match> oldMatches, RichTextBox rtb)
         {
             var input = tb.Text.Trim();
             tb.ForeColor = SystemColors.WindowText;

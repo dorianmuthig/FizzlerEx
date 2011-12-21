@@ -179,6 +179,13 @@ namespace VisualFizzler
             _lastKnownGoodImportedUrl = url;
         }
 
+        private void cmdPasteFromClipboard_Click(object sender, EventArgs e)
+        {
+            var document = new HtmlDocument();
+            document.LoadHtml2(Clipboard.GetText());
+            Open(document);
+        }
+
         private void SelectorBox_TextChanged(object sender, EventArgs e)
         {
             Evaluate();
@@ -320,5 +327,11 @@ namespace VisualFizzler
         {
             System.Diagnostics.Process.Start("http://fizzlerex.codeplex.com/");
         }
+
+        private void fileToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            cmdPasteFromClipboard.Enabled = Clipboard.ContainsText();
+        }
+
     }
 }

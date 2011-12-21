@@ -99,4 +99,12 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <None Include="Properties\VersionInfo.template.cs" />
+    <Compile Include="Properties\VersionInfo.generated.cs" />
+  </ItemGroup>
+  <UsingTask TaskName="HgVersionFile" AssemblyFile="..\MSBuildVersioning.dll" />
+  <Target Name="BeforeBuild">
+    <HgVersionFile TemplateFile="Properties\VersionInfo.template.cs" DestinationFile="Properties\VersionInfo.generated.cs" />
+  </Target>
 </Project>

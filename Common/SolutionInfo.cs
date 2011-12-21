@@ -31,17 +31,10 @@ using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
 // General description
 //
 
-[assembly: AssemblyProduct("Fizzler")]
-[assembly: AssemblyCompany("http://fizzler.googlecode.com")]
-[assembly: AssemblyCopyright("Copyright (c) 2009, 2010 Atif Aziz, Colin Ramsay. All rights reserved.")]
+[assembly: AssemblyProduct("FizzlerEx")]
+[assembly: AssemblyCompany("http://fizzlerex.codeplex.com/")]
+[assembly: AssemblyCopyright("Copyright (c) 2009-2011 Atif Aziz, Colin Ramsay, Andrea Martinelli. All rights reserved.")]
 [assembly: AssemblyCulture("")]
-
-//
-// Version information
-//
-
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyInformationalVersion("0.1.0.0")]
 
 //
 // Configuration (test, debug, release)

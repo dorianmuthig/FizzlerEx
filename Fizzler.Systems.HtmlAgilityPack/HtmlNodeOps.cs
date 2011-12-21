@@ -395,9 +395,8 @@ namespace Fizzler.Systems.HtmlAgilityPack
             var group = doc.CreateElement("fizzler_nodes_group");
             for (int i = start; i <= last; i++)
             {
-                group.AppendChild(nodes[i]);
+                group.ChildNodes.Add(nodes[i]);
             }
-            // TODO re-parent? clone?
             return group;
         }
 

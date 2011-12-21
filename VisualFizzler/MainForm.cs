@@ -295,10 +295,13 @@ namespace VisualFizzler
                 var matches = new List<Match>(elements.Length);
                 foreach (var element in elements)
                 {
-                    var index = rtb.GetFirstCharIndexFromLine(element.Line - 1) + element.LinePosition - 1;
-                    var match = _tagExpression.Match(html, index);
-                    if (match.Success)
-                        matches.Add(match);
+                    if (element.Line != 0)
+                    {
+                        var index = rtb.GetFirstCharIndexFromLine(element.Line - 1) + element.LinePosition - 1;
+                        var match = _tagExpression.Match(html, index);
+                        if (match.Success)
+                            matches.Add(match);
+                    }
                 }
 
                 Highlight(rtb, matches, null, Color.Yellow, null);

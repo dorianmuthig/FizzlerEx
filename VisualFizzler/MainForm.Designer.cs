@@ -37,17 +37,18 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fizzlerExWebSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this._selectorBox = new System.Windows.Forms.TextBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this._matchBox = new System.Windows.Forms.ListBox();
             this._documentBox = new System.Windows.Forms.RichTextBox();
             this._status = new System.Windows.Forms.StatusStrip();
+            this.errorText = new System.Windows.Forms.ToolStripStatusLabel();
             this._statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this._openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this._toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.fizzlerExWebSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.errorText = new System.Windows.Forms.ToolStripStatusLabel();
+            this.cmdPasteFromClipboard = new System.Windows.Forms.ToolStripMenuItem();
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this._menuStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -63,8 +64,8 @@
             // 
             toolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem1.Image")));
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new System.Drawing.Size(177, 22);
-            toolStripMenuItem1.Text = "&Import From Web...";
+            toolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
+            toolStripMenuItem1.Text = "&Import from web...";
             toolStripMenuItem1.Click += new System.EventHandler(this.ImportFromWebMenu_Click);
             // 
             // _menuStrip
@@ -84,11 +85,13 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             toolStripMenuItem1,
+            this.cmdPasteFromClipboard,
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
+            this.fileToolStripMenuItem.DropDownOpening += new System.EventHandler(this.fileToolStripMenuItem_DropDownOpening);
             // 
             // openToolStripMenuItem
             // 
@@ -96,19 +99,19 @@
             this.openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.FileOpen_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(174, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(181, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.FileExit_Click);
             // 
@@ -119,6 +122,13 @@
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
+            // 
+            // fizzlerExWebSiteToolStripMenuItem
+            // 
+            this.fizzlerExWebSiteToolStripMenuItem.Name = "fizzlerExWebSiteToolStripMenuItem";
+            this.fizzlerExWebSiteToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.fizzlerExWebSiteToolStripMenuItem.Text = "FizzlerEx web site";
+            this.fizzlerExWebSiteToolStripMenuItem.Click += new System.EventHandler(this.fizzlerExWebSiteToolStripMenuItem_Click);
             // 
             // splitContainer1
             // 
@@ -207,10 +217,15 @@
             this._status.Size = new System.Drawing.Size(658, 22);
             this._status.TabIndex = 1;
             // 
+            // errorText
+            // 
+            this.errorText.Name = "errorText";
+            this.errorText.Size = new System.Drawing.Size(0, 17);
+            // 
             // _statusLabel
             // 
             this._statusLabel.Name = "_statusLabel";
-            this._statusLabel.Size = new System.Drawing.Size(616, 17);
+            this._statusLabel.Size = new System.Drawing.Size(647, 17);
             this._statusLabel.Spring = true;
             this._statusLabel.Text = "Ready";
             this._statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -220,17 +235,13 @@
             this._openFileDialog.Filter = "HTML Files|*.htm;*.html|All Files|*.*";
             this._openFileDialog.Title = "Open File";
             // 
-            // fizzlerExWebSiteToolStripMenuItem
+            // cmdPasteFromClipboard
             // 
-            this.fizzlerExWebSiteToolStripMenuItem.Name = "fizzlerExWebSiteToolStripMenuItem";
-            this.fizzlerExWebSiteToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.fizzlerExWebSiteToolStripMenuItem.Text = "FizzlerEx web site";
-            this.fizzlerExWebSiteToolStripMenuItem.Click += new System.EventHandler(this.fizzlerExWebSiteToolStripMenuItem_Click);
-            // 
-            // errorText
-            // 
-            this.errorText.Name = "errorText";
-            this.errorText.Size = new System.Drawing.Size(0, 17);
+            this.cmdPasteFromClipboard.Image = ((System.Drawing.Image)(resources.GetObject("cmdPasteFromClipboard.Image")));
+            this.cmdPasteFromClipboard.Name = "cmdPasteFromClipboard";
+            this.cmdPasteFromClipboard.Size = new System.Drawing.Size(184, 22);
+            this.cmdPasteFromClipboard.Text = "Paste from clipboard";
+            this.cmdPasteFromClipboard.Click += new System.EventHandler(this.cmdPasteFromClipboard_Click);
             // 
             // MainForm
             // 
@@ -279,6 +290,7 @@
         private System.Windows.Forms.TextBox _selectorBox;
         private System.Windows.Forms.ToolStripMenuItem fizzlerExWebSiteToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel errorText;
+        private System.Windows.Forms.ToolStripMenuItem cmdPasteFromClipboard;
     }
 }
 

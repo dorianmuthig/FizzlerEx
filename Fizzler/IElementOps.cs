@@ -186,6 +186,14 @@ namespace Fizzler
         /// </summary>
         Selector<TElement> Has(ISelectorGenerator subgenerator);
 
+
+        Selector<TElement> SplitAfter(ISelectorGenerator subgenerator);
+        Selector<TElement> SplitBefore(ISelectorGenerator subgenerator);
+        Selector<TElement> SplitBetween(ISelectorGenerator subgenerator);
+        Selector<TElement> SplitAll(ISelectorGenerator subgenerator);
+
+
+
         /// <summary>
         /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
         /// which represents an element that does not match the specified query.

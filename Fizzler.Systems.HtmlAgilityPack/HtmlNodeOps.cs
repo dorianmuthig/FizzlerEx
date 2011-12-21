@@ -5,6 +5,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
     using System;
     using System.Linq;
     using global::HtmlAgilityPack;
+    using System.Collections.Generic;
 
     #endregion
 
@@ -310,6 +311,94 @@ namespace Fizzler.Systems.HtmlAgilityPack
             var compiled = castedGenerator.Selector;
 
             return nodes => nodes.Where(n => compiled(new[] { n }).Any());
+        }
+
+        public Selector<HtmlNode> SplitAfter(ISelectorGenerator subgenerator)
+        {
+            return nodes => nodes.SelectMany(x => Split(subgenerator, x, false, true));
+        }
+
+        public Selector<HtmlNode> SplitBefore(ISelectorGenerator subgenerator)
+        {
+            return nodes => nodes.SelectMany(x => Split(subgenerator, x, true, false));
+        }
+
+        public Selector<HtmlNode> SplitBetween(ISelectorGenerator subgenerator)
+        {
+            return nodes => nodes.SelectMany(x => Split(subgenerator, x, false, false));
+        }
+
+        public Selector<HtmlNode> SplitAll(ISelectorGenerator subgenerator)
+        {
+            return nodes => nodes.SelectMany(x => Split(subgenerator, x, true, true));
+        }
+
+        private IEnumerable<HtmlNode> Split(ISelectorGenerator subgenerator, HtmlNode parent, bool keepBefore, bool keepAfter)
+        {
+            var castedGenerator = (SelectorGenerator<HtmlNode>)subgenerator;
+            var compiled = castedGenerator.Selector;
+
+            var children = parent.ChildNodes.ToArray();
+            var splitterPositions = new List<int>();
+            var splitterIndex = 0;
+            foreach (var splitter in compiled(new[] { parent }))
+            {
+                splitterIndex = Array.IndexOf(children, splitter, splitterIndex);
+                if (splitterIndex == -1)
+                    throw new FormatException("The node splitter must be a direct child of the context node.");
+
+                splitterPositions.Add(splitterIndex);
+            }
+
+            if (splitterPositions.Count == 0)
+            {
+                if (keepBefore && keepAfter)
+                    yield return parent;
+                yield break;
+            }
+
+
+            var doc = new HtmlDocument();
+            var keepSeparators = keepBefore != keepAfter;
+
+
+            if (keepBefore)
+                yield return CreateNodesGroup(doc, children, 0, splitterPositions[0] + (keepSeparators ? 0 : -1));
+
+            for (int i = 1; i < splitterPositions.Count; i++)
+            {
+
+                var indexBegin = splitterPositions[i - 1] + 1;
+                var indexEnd = splitterPositions[i] - 1;
+
+                if (keepSeparators)
+                {
+                    if (keepAfter) indexBegin--;
+                    else indexEnd++;
+                }
+
+                yield return CreateNodesGroup(doc, children, indexBegin, indexEnd);
+            }
+
+
+            if (keepAfter)
+                yield return CreateNodesGroup(doc, children, splitterPositions[splitterPositions.Count - 1] + (keepSeparators ? 0 : 1), children.Length - 1);
+
+
+
+
+
+        }
+
+        private HtmlNode CreateNodesGroup(HtmlDocument doc, HtmlNode[] nodes, int start, int last)
+        {
+            var group = doc.CreateElement("fizzler_nodes_group");
+            for (int i = start; i <= last; i++)
+            {
+                group.AppendChild(nodes[i]);
+            }
+            // TODO re-parent? clone?
+            return group;
         }
 
         public Selector<HtmlNode> Not(ISelectorGenerator subgenerator)

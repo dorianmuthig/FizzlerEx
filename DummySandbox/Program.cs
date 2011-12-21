@@ -15,15 +15,31 @@ namespace DummySandbox
             var p = doc.CreateElement("p");
             p.InnerHtml = (@"
 
+<div id=a>
 <div class=asdf>
-<span><b>qui</b></span>
-<span><b>quo</b></span>
-<span><b>qua</b></span>
+<h1>Music</h1>
+
+<hr>
+<b>Kate Havnevik</b>
+<i>Grace</i>
+<i>Show Me Love</i>
+<i>Kaleidoscope</i>
+
+<hr>
+<b>Evanescence</b>
+<i>My Immortal</i>
+<i>Lithium</i>
+<i>Tourniquet</i>
+
+
+<footer>(c) 2011</footer>
+
+</div>
 </div>
 
 ");
 
-            p.QuerySelectorAll("/ * *");
+            var r = p.QuerySelectorAll("#a > .asdf:split-after(hr)").ToArray();
           //  var r = p.QuerySelector(".asdf").QuerySelectorAll(":select-parent");
 
         }

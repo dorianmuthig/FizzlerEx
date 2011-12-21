@@ -47,3 +47,6 @@ _ReSharper*/
 
 
 .svn
+
+VersionInfo.generated.cs
+

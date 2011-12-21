@@ -164,6 +164,30 @@ namespace Fizzler
 
         /// <summary>
         /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// that selects chunks of nodes based on the specified splitter selector (ignoring the content before the first separator)
+        /// </summary>
+        void SplitAfter(ISelectorGenerator subgenerator);
+
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// that selects chunks of nodes based on the specified splitter selector (ignoring the content after the last separator)
+        /// </summary>
+        void SplitBefore(ISelectorGenerator subgenerator);
+
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// that selects chunks of nodes based on the specified splitter selector (ignoring the content before the first separator and after the last separator)
+        /// </summary>
+        void SplitBetween(ISelectorGenerator subgenerator);
+
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// that selects chunks of nodes based on the specified splitter selector (including the content before the first separator and after the last separator)
+        /// </summary>
+        void SplitAll(ISelectorGenerator subgenerator);
+
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
         /// which represents an element that does not match the specified selector.
         /// </summary>
         void Not(ISelectorGenerator generator);
@@ -228,5 +252,6 @@ namespace Fizzler
         ISelectorGenerator CreateNew();
 
         void AnchorToRoot();
+
     }
 }

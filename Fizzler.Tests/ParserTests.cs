@@ -505,6 +505,26 @@ namespace Fizzler.Tests
                 throw new NotImplementedException();
             }
 
+            public void SplitAfter(ISelectorGenerator subgenerator)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void SplitBefore(ISelectorGenerator subgenerator)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void SplitBetween(ISelectorGenerator subgenerator)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void SplitAll(ISelectorGenerator subgenerator)
+            {
+                throw new NotImplementedException();
+            }
+
             public void Not(ISelectorGenerator generator)
             {
                 throw new NotImplementedException();

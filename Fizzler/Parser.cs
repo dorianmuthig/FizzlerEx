@@ -256,6 +256,10 @@ namespace Fizzler
                 case "nth-child": Nth(); break;
                 case "nth-last-child": NthLast(); break;
                 case "has": Has(); break;
+                case "split-after": SplitAfter(); break;
+                case "split-before": SplitBefore(); break;
+                case "split-between": SplitBetween(); break;
+                case "split-all": SplitAll(); break;
                 case "not": Not(); break;
                 case "contains": Contains(); break;
                 default:
@@ -283,6 +287,38 @@ namespace Fizzler
             var inner = new Parser(_reader, subgenerator, false);
             inner.Parse();
             _generator.Has(subgenerator);
+        }
+
+        private void SplitAfter()
+        {
+            var subgenerator = _generator.CreateNew();
+            var inner = new Parser(_reader, subgenerator, false);
+            inner.Parse();
+            _generator.SplitAfter(subgenerator);
+        }
+
+        private void SplitBefore()
+        {
+            var subgenerator = _generator.CreateNew();
+            var inner = new Parser(_reader, subgenerator, false);
+            inner.Parse();
+            _generator.SplitBefore(subgenerator);
+        }
+
+        private void SplitBetween()
+        {
+            var subgenerator = _generator.CreateNew();
+            var inner = new Parser(_reader, subgenerator, false);
+            inner.Parse();
+            _generator.SplitBetween(subgenerator);
+        }
+
+        private void SplitAll()
+        {
+            var subgenerator = _generator.CreateNew();
+            var inner = new Parser(_reader, subgenerator, false);
+            inner.Parse();
+            _generator.SplitAll(subgenerator);
         }
 
         private void Not()

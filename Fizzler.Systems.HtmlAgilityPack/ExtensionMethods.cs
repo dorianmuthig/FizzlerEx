@@ -12,7 +12,7 @@ namespace Fizzler
             foreach (var item in source)
             {
                 var value = selector(item);
-                if(value != null) yield return value;
+                if (value != null) yield return value;
             }
         }
     }

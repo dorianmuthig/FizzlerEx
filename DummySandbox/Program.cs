@@ -43,9 +43,9 @@ namespace DummySandbox
             var s = r[0].ChildNodes[0].ParentNode;
 
             //  var asd = p.QuerySelectorAll("#a > .asdf:split-after(hr):after(b)").ToArray();
-             var sdf = p.QuerySelectorAll(".asdf:between(hr; footer)").ToArray();
+            var sdf = p.QuerySelectorAll(".asdf:between(hr; footer)").ToArray();
 
-          //  var r = p.QuerySelector(".asdf").QuerySelectorAll(":select-parent");
+            //  var r = p.QuerySelector(".asdf").QuerySelectorAll(":select-parent");
 
         }
     }

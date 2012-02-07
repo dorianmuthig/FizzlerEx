@@ -84,7 +84,8 @@ namespace Fizzler
         private void Parse()
         {
             _generator.OnInit();
-            if (TryRead(ToTokenSpec(Token.Slash())) != null) {
+            if (TryRead(ToTokenSpec(Token.Slash())) != null)
+            {
                 _generator.AnchorToRoot();
                 TryRead(ToTokenSpec(TokenKind.WhiteSpace));
             }
@@ -338,7 +339,7 @@ namespace Fizzler
             generatorMethod(ParseSubGenerator());
         }
 
-        private ISelectorGenerator ParseSubGenerator() 
+        private ISelectorGenerator ParseSubGenerator()
         {
             var subgenerator = _generator.CreateNew();
             var inner = new Parser(_reader, subgenerator, false);

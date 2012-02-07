@@ -283,50 +283,39 @@ namespace Fizzler
 
         private void Has()
         {
-            var subgenerator = _generator.CreateNew();
-            var inner = new Parser(_reader, subgenerator, false);
-            inner.Parse();
-            _generator.Has(subgenerator);
+            ParseWithExpression(_generator.Has);
         }
 
         private void SplitAfter()
         {
-            var subgenerator = _generator.CreateNew();
-            var inner = new Parser(_reader, subgenerator, false);
-            inner.Parse();
-            _generator.SplitAfter(subgenerator);
+            ParseWithExpression(_generator.SplitAfter);
         }
 
         private void SplitBefore()
         {
-            var subgenerator = _generator.CreateNew();
-            var inner = new Parser(_reader, subgenerator, false);
-            inner.Parse();
-            _generator.SplitBefore(subgenerator);
+            ParseWithExpression(_generator.SplitBefore);
         }
 
         private void SplitBetween()
         {
-            var subgenerator = _generator.CreateNew();
-            var inner = new Parser(_reader, subgenerator, false);
-            inner.Parse();
-            _generator.SplitBetween(subgenerator);
+            ParseWithExpression(_generator.SplitBetween);
         }
 
         private void SplitAll()
         {
-            var subgenerator = _generator.CreateNew();
-            var inner = new Parser(_reader, subgenerator, false);
-            inner.Parse();
-            _generator.SplitAll(subgenerator);
+            ParseWithExpression(_generator.SplitAll);
         }
 
         private void Not()
         {
+            ParseWithExpression(_generator.Not);
+        }
+
+        private void ParseWithExpression(Action<ISelectorGenerator> generatorMethod) {
             var subgenerator = _generator.CreateNew();
             var inner = new Parser(_reader, subgenerator, false);
             inner.Parse();
-            _generator.Not(subgenerator);
+            generatorMethod(subgenerator);
         }
 
         private void Nth()

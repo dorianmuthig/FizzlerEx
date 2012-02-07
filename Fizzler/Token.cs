@@ -37,6 +37,7 @@ namespace Fizzler
         private static readonly Token _dot = Char('.');
         private static readonly Token _colon = Char(':');
         private static readonly Token _comma = Char(',');
+        private static readonly Token _semicolon = Char(';');
         private static readonly Token _rightParenthesis = Char(')');
         private static readonly Token _equals = Char('=');
         private static readonly Token _pipe = Char('|');
@@ -73,6 +74,14 @@ namespace Fizzler
         public static Token Comma()
         {
             return _comma;
+        }
+
+        /// <summary>
+        /// Creates a comma token.
+        /// </summary>
+        public static Token Semicolon()
+        {
+            return _semicolon;
         }
 
         /// <summary>

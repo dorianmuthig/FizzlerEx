@@ -194,7 +194,7 @@ namespace Fizzler
 
         Selector<TElement> Before(ISelectorGenerator subgenerator);
         Selector<TElement> After(ISelectorGenerator subgenerator);
-        Selector<TElement> Between(ISelectorGenerator subgenerator);
+        Selector<TElement> Between(ISelectorGenerator startGenerator, ISelectorGenerator endGenerator);
 
 
 

@@ -535,7 +535,7 @@ namespace Fizzler.Tests
                 throw new NotImplementedException();
             }
 
-            public void Between(ISelectorGenerator subgenerator)
+            public void Between(ISelectorGenerator startGenerator, ISelectorGenerator endGenerator)
             {
                 throw new NotImplementedException();
             }

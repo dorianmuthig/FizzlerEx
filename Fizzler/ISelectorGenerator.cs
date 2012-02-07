@@ -202,7 +202,7 @@ namespace Fizzler
         /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
         /// that selects the nodes between two specified nodes, grouped in a single node
         /// </summary>
-        void Between(ISelectorGenerator subgenerator);
+        void Between(ISelectorGenerator startGenerator, ISelectorGenerator endGenerator);
 
         /// <summary>
         /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,

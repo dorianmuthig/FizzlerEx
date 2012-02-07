@@ -1,3 +1,5 @@
+using Fizzler;
+
 namespace Fizzler.Systems.HtmlAgilityPack
 {
     #region Imports
@@ -333,14 +335,19 @@ namespace Fizzler.Systems.HtmlAgilityPack
             return nodes => nodes.SelectMany(x => Split(subgenerator, x, true, true));
         }
 
+        private Selector<HtmlNode> GetSelector(ISelectorGenerator subgenerator)
+        {
+            return ((SelectorGenerator<HtmlNode>)subgenerator).Selector;
+        }
+
         private IEnumerable<HtmlNode> Split(ISelectorGenerator subgenerator, HtmlNode parent, bool keepBefore, bool keepAfter)
         {
-            var compiled = ((SelectorGenerator<HtmlNode>)subgenerator).Selector;
+            var selector = GetSelector(subgenerator);
 
             var children = parent.ChildNodes.ToArray();
             var splitterPositions = new List<int>();
             var splitterIndex = 0;
-            foreach (var splitter in compiled(new[] { parent }))
+            foreach (var splitter in selector(new[] { parent }))
             {
                 splitterIndex = Array.IndexOf(children, splitter, splitterIndex);
                 if (splitterIndex == -1)
@@ -388,7 +395,12 @@ namespace Fizzler.Systems.HtmlAgilityPack
 
         public Selector<HtmlNode> Before(ISelectorGenerator subgenerator)
         {
-            throw new NotImplementedException();
+            var doc = new HtmlDocument();
+            return nodes => nodes.SelectNonNull(parent =>
+            {
+                var end = IndexOfChild(subgenerator, parent, 0);
+                return end != null ? CreateNodesGroup(doc, parent.ChildNodes, 0, end.Value - 1) : null;
+            });
         }
 
         public Selector<HtmlNode> After(ISelectorGenerator subgenerator)
@@ -401,7 +413,24 @@ namespace Fizzler.Systems.HtmlAgilityPack
             throw new NotImplementedException();
         }
 
-        private HtmlNode CreateNodesGroup(HtmlDocument doc, HtmlNode[] nodes, int start, int last)
+        private int? IndexOfChild(ISelectorGenerator subgenerator, HtmlNode parent, int startIndex)
+        {
+            var selector = GetSelector(subgenerator);
+
+            var children = parent.ChildNodes;
+            var limit = selector(new[] { parent })
+                .Select(x => new { Node = x, Position = children.IndexOf(x) })
+                .FirstOrDefault(x =>
+                {
+                    if (x.Position == -1)
+                        throw new FormatException("The limit node must be a direct child of the context node.");
+                    return x.Position >= startIndex;
+                });
+
+            return limit != null ? limit.Position : (int?)null;
+        }
+
+        private HtmlNode CreateNodesGroup(HtmlDocument doc, IList<HtmlNode> nodes, int start, int last)
         {
             var group = doc.CreateElement("fizzler_nodes_group");
             for (int i = start; i <= last; i++)

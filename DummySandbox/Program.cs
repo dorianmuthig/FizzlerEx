@@ -40,6 +40,10 @@ namespace DummySandbox
 ");
 
             var r = p.QuerySelectorAll("#a > .asdf:split-after(hr)").ToArray();
+            var s = r[0].ChildNodes[0].ParentNode;
+
+            var asd = p.QuerySelectorAll("#a > .asdf:split-after(hr):before(b)").ToArray();
+
           //  var r = p.QuerySelector(".asdf").QuerySelectorAll(":select-parent");
 
         }

@@ -405,7 +405,12 @@ namespace Fizzler.Systems.HtmlAgilityPack
 
         public Selector<HtmlNode> After(ISelectorGenerator subgenerator)
         {
-            throw new NotImplementedException();
+            var doc = new HtmlDocument();
+            return nodes => nodes.SelectNonNull(parent =>
+            {
+                var start = IndexOfChild(subgenerator, parent, 0);
+                return start != null ? CreateNodesGroup(doc, parent.ChildNodes, start.Value + 1, parent.ChildNodes.Count - 1) : null;
+            });
         }
 
         public Selector<HtmlNode> Between(ISelectorGenerator subgenerator)

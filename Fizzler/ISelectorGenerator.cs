@@ -188,6 +188,24 @@ namespace Fizzler
 
         /// <summary>
         /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// that selects the nodes before a specified node, grouped into a single node
+        /// </summary>
+        void Before(ISelectorGenerator subgenerator);
+
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// that selects the nodes after a specified node, grouped into a single node
+        /// </summary>
+        void After(ISelectorGenerator subgenerator);
+
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// that selects the nodes between two specified nodes, grouped in a single node
+        /// </summary>
+        void Between(ISelectorGenerator subgenerator);
+
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
         /// which represents an element that does not match the specified selector.
         /// </summary>
         void Not(ISelectorGenerator generator);

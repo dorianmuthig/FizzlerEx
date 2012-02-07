@@ -525,6 +525,21 @@ namespace Fizzler.Tests
                 throw new NotImplementedException();
             }
 
+            public void Before(ISelectorGenerator subgenerator)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void After(ISelectorGenerator subgenerator)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Between(ISelectorGenerator subgenerator)
+            {
+                throw new NotImplementedException();
+            }
+
             public void Not(ISelectorGenerator generator)
             {
                 throw new NotImplementedException();

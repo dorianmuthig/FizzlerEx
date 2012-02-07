@@ -367,6 +367,21 @@ namespace Fizzler
             Add(Ops.SplitAll(subgenerator));
         }
 
+        public void Before(ISelectorGenerator subgenerator)
+        {
+            Add(Ops.Before(subgenerator));
+        }
+
+        public void After(ISelectorGenerator subgenerator)
+        {
+            Add(Ops.After(subgenerator));
+        }
+
+        public void Between(ISelectorGenerator subgenerator)
+        {
+            Add(Ops.Between(subgenerator));
+        }
+
         /// <summary>
         /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
         /// which represents an element that does not match the specified selector.

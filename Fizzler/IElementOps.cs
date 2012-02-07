@@ -192,6 +192,10 @@ namespace Fizzler
         Selector<TElement> SplitBetween(ISelectorGenerator subgenerator);
         Selector<TElement> SplitAll(ISelectorGenerator subgenerator);
 
+        Selector<TElement> Before(ISelectorGenerator subgenerator);
+        Selector<TElement> After(ISelectorGenerator subgenerator);
+        Selector<TElement> Between(ISelectorGenerator subgenerator);
+
 
 
         /// <summary>

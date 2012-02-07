@@ -384,10 +384,22 @@ namespace Fizzler.Systems.HtmlAgilityPack
             if (keepAfter)
                 yield return CreateNodesGroup(doc, children, splitterPositions[splitterPositions.Count - 1] + (keepSeparators ? 0 : 1), children.Length - 1);
 
+        }
 
 
+        public Selector<HtmlNode> Before(ISelectorGenerator subgenerator)
+        {
+            throw new NotImplementedException();
+        }
 
+        public Selector<HtmlNode> After(ISelectorGenerator subgenerator)
+        {
+            throw new NotImplementedException();
+        }
 
+        public Selector<HtmlNode> Between(ISelectorGenerator subgenerator)
+        {
+            throw new NotImplementedException();
         }
 
         private HtmlNode CreateNodesGroup(HtmlDocument doc, HtmlNode[] nodes, int start, int last)

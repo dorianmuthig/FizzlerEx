@@ -260,6 +260,9 @@ namespace Fizzler
                 case "split-before": SplitBefore(); break;
                 case "split-between": SplitBetween(); break;
                 case "split-all": SplitAll(); break;
+                case "before": Before(); break;
+                case "after": After(); break;
+                case "between": Between(); break;
                 case "not": Not(); break;
                 case "contains": Contains(); break;
                 default:
@@ -304,6 +307,21 @@ namespace Fizzler
         private void SplitAll()
         {
             ParseWithExpression(_generator.SplitAll);
+        }
+
+        private void Before()
+        {
+            ParseWithExpression(_generator.Before);
+        }
+
+        private void After()
+        {
+            ParseWithExpression(_generator.After);
+        }
+
+        private void Between()
+        {
+            ParseWithExpression(_generator.Between);
         }
 
         private void Not()

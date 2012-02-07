@@ -321,7 +321,11 @@ namespace Fizzler
 
         private void Between()
         {
-            ParseWithExpression(_generator.Between);
+            var gen1 = ParseSubGenerator();
+            Read(ToTokenSpec(Token.Semicolon()));
+            Read(ToTokenSpec(TokenKind.WhiteSpace));
+            var gen2 = ParseSubGenerator();
+            _generator.Between(gen1, gen2);
         }
 
         private void Not()
@@ -329,11 +333,17 @@ namespace Fizzler
             ParseWithExpression(_generator.Not);
         }
 
-        private void ParseWithExpression(Action<ISelectorGenerator> generatorMethod) {
+        private void ParseWithExpression(Action<ISelectorGenerator> generatorMethod)
+        {
+            generatorMethod(ParseSubGenerator());
+        }
+
+        private ISelectorGenerator ParseSubGenerator() 
+        {
             var subgenerator = _generator.CreateNew();
             var inner = new Parser(_reader, subgenerator, false);
             inner.Parse();
-            generatorMethod(subgenerator);
+            return subgenerator;
         }
 
         private void Nth()

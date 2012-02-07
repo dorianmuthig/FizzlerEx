@@ -71,6 +71,7 @@
                     switch (ch)
                     {
                         case ',': yield return Token.Comma(); break;
+                        case ';': yield return Token.Semicolon(); break;
                         case '+': yield return Token.Plus(); break;
                         case '>': yield return Token.Greater(); break;
                         case '~': yield return Token.Tilde(); break;
@@ -124,6 +125,7 @@
                     case '.': yield return Token.Dot(); break;
                     case ':':  yield return Token.Colon(); break;
                     case ',':  yield return Token.Comma(); break;
+                    case ';':  yield return Token.Semicolon(); break;
                     case '=':  yield return Token.Equals(); break;
                     case '[':  yield return Token.LeftBracket(); break;
                     case ']':  yield return Token.RightBracket(); break;

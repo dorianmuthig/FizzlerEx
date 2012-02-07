@@ -413,9 +413,18 @@ namespace Fizzler.Systems.HtmlAgilityPack
             });
         }
 
-        public Selector<HtmlNode> Between(ISelectorGenerator subgenerator)
+        public Selector<HtmlNode> Between(ISelectorGenerator startGenerator, ISelectorGenerator endGenerator)
         {
-            throw new NotImplementedException();
+            var doc = new HtmlDocument();
+            return nodes => nodes.SelectNonNull(parent =>
+            {
+                var start = IndexOfChild(startGenerator, parent, 0);
+                if (start == null) return null;
+                var end = IndexOfChild(endGenerator, parent, start.Value);
+                if (end == null) return null;
+
+                return CreateNodesGroup(doc, parent.ChildNodes, start.Value + 1, end.Value - 1);
+            });
         }
 
         private int? IndexOfChild(ISelectorGenerator subgenerator, HtmlNode parent, int startIndex)

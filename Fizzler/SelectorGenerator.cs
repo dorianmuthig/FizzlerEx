@@ -377,9 +377,9 @@ namespace Fizzler
             Add(Ops.After(subgenerator));
         }
 
-        public void Between(ISelectorGenerator subgenerator)
+        public void Between(ISelectorGenerator startGenerator, ISelectorGenerator endGenerator)
         {
-            Add(Ops.Between(subgenerator));
+            Add(Ops.Between(startGenerator, endGenerator));
         }
 
         /// <summary>

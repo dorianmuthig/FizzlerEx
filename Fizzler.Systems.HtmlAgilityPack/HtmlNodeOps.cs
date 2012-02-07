@@ -335,8 +335,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
 
         private IEnumerable<HtmlNode> Split(ISelectorGenerator subgenerator, HtmlNode parent, bool keepBefore, bool keepAfter)
         {
-            var castedGenerator = (SelectorGenerator<HtmlNode>)subgenerator;
-            var compiled = castedGenerator.Selector;
+            var compiled = ((SelectorGenerator<HtmlNode>)subgenerator).Selector;
 
             var children = parent.ChildNodes.ToArray();
             var splitterPositions = new List<int>();

@@ -13,30 +13,37 @@ using System.Collections;
 using System.Security.Permissions;
 using System.Runtime.Serialization;
 
-namespace JMBucknall.Containers {
+namespace JMBucknall.Containers
+{
 
     [Serializable()]
-    public struct HeapEntry {
+    public struct HeapEntry
+    {
         private object item;
         private IComparable priority;
-        public HeapEntry(object item, IComparable priority) {
+        public HeapEntry(object item, IComparable priority)
+        {
             this.item = item;
             this.priority = priority;
         }
-        public object Item {
-            get {return item;}
+        public object Item
+        {
+            get { return item; }
         }
-        public IComparable Priority {
-            get {return priority;}
+        public IComparable Priority
+        {
+            get { return priority; }
         }
-        public void Clear() {
+        public void Clear()
+        {
             item = null;
             priority = null;
         }
     }
 
     [Serializable()]
-    public class PriorityQueue : ICollection, ISerializable {
+    public class PriorityQueue : ICollection, ISerializable
+    {
         private int count;
         private int capacity;
         private int version;
@@ -46,24 +53,27 @@ namespace JMBucknall.Containers {
         private const string countName = "count";
         private const string heapName = "heap";
 
-        public PriorityQueue() {
+        public PriorityQueue()
+        {
             capacity = 15; // 15 is equal to 4 complete levels
             heap = new HeapEntry[capacity];
         }
 
-        protected PriorityQueue(SerializationInfo info, StreamingContext context) {
+        protected PriorityQueue(SerializationInfo info, StreamingContext context)
+        {
             capacity = info.GetInt32(capacityName);
             count = info.GetInt32(countName);
-            HeapEntry[] heapCopy = (HeapEntry[]) info.GetValue(heapName, typeof(HeapEntry[]));
+            HeapEntry[] heapCopy = (HeapEntry[])info.GetValue(heapName, typeof(HeapEntry[]));
             heap = new HeapEntry[capacity];
             Array.Copy(heapCopy, 0, heap, 0, count);
             version = 0;
         }
 
-        public object Dequeue() {
-            if (count == 0) 
+        public object Dequeue()
+        {
+            if (count == 0)
                 throw new InvalidOperationException();
-            
+
             object result = heap[0].Item;
             count--;
             trickleDown(0, heap[count]);
@@ -72,21 +82,24 @@ namespace JMBucknall.Containers {
             return result;
         }
 
-        public void Enqueue(object item, IComparable priority) {
-            if (priority == null) 
+        public void Enqueue(object item, IComparable priority)
+        {
+            if (priority == null)
                 throw new ArgumentNullException("priority");
-            if (count == capacity)  
+            if (count == capacity)
                 growHeap();
             count++;
             bubbleUp(count - 1, new HeapEntry(item, priority));
             version++;
         }
 
-        private void bubbleUp(int index, HeapEntry he) {
+        private void bubbleUp(int index, HeapEntry he)
+        {
             int parent = getParent(index);
             // note: (index > 0) means there is a parent
-            while ((index > 0) && 
-                  (heap[parent].Priority.CompareTo(he.Priority) < 0)) {
+            while ((index > 0) &&
+                  (heap[parent].Priority.CompareTo(he.Priority) < 0))
+            {
                 heap[index] = heap[parent];
                 index = parent;
                 parent = getParent(index);
@@ -94,26 +107,32 @@ namespace JMBucknall.Containers {
             heap[index] = he;
         }
 
-        private int getLeftChild(int index) {
+        private int getLeftChild(int index)
+        {
             return (index * 2) + 1;
         }
 
-        private int getParent(int index) {
+        private int getParent(int index)
+        {
             return (index - 1) / 2;
         }
 
-        private void growHeap() {
+        private void growHeap()
+        {
             capacity = (capacity * 2) + 1;
             HeapEntry[] newHeap = new HeapEntry[capacity];
             System.Array.Copy(heap, 0, newHeap, 0, count);
             heap = newHeap;
         }
 
-        private void trickleDown(int index, HeapEntry he) {
+        private void trickleDown(int index, HeapEntry he)
+        {
             int child = getLeftChild(index);
-            while (child < count) {
-                if (((child + 1) < count) && 
-                    (heap[child].Priority.CompareTo(heap[child + 1].Priority) < 0)) {
+            while (child < count)
+            {
+                if (((child + 1) < count) &&
+                    (heap[child].Priority.CompareTo(heap[child + 1].Priority) < 0))
+                {
                     child++;
                 }
                 heap[index] = heap[child];
@@ -122,34 +141,40 @@ namespace JMBucknall.Containers {
             }
             bubbleUp(index, he);
         }
-        
+
         #region IEnumerable implementation
-        public IEnumerator GetEnumerator() {
+        public IEnumerator GetEnumerator()
+        {
             return new PriorityQueueEnumerator(this);
         }
         #endregion
 
         #region ICollection implementation
-        public int Count {
-            get {return count;}
+        public int Count
+        {
+            get { return count; }
         }
 
-        public void CopyTo(Array array, int index) {
+        public void CopyTo(Array array, int index)
+        {
             System.Array.Copy(heap, 0, array, index, count);
         }
 
-        public object SyncRoot {
-            get {return this;}
+        public object SyncRoot
+        {
+            get { return this; }
         }
 
-        public bool IsSynchronized { 
-            get {return false;}
+        public bool IsSynchronized
+        {
+            get { return false; }
         }
         #endregion
 
         #region ISerializable implementation
-        [SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
-        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context) {
+        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
+        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+        {
             info.AddValue(capacityName, capacity);
             info.AddValue(countName, count);
             HeapEntry[] heapCopy = new HeapEntry[count];
@@ -160,38 +185,45 @@ namespace JMBucknall.Containers {
 
         #region Priority Queue enumerator
         [Serializable()]
-        private class PriorityQueueEnumerator : IEnumerator {
+        private class PriorityQueueEnumerator : IEnumerator
+        {
             private int index;
             private PriorityQueue pq;
             private int version;
 
-            public PriorityQueueEnumerator(PriorityQueue pq) {
+            public PriorityQueueEnumerator(PriorityQueue pq)
+            {
                 this.pq = pq;
                 Reset();
             }
 
-            private void checkVersion() {
+            private void checkVersion()
+            {
                 if (version != pq.version)
                     throw new InvalidOperationException();
             }
 
             #region IEnumerator Members
 
-            public void Reset() {
+            public void Reset()
+            {
                 index = -1;
                 version = pq.version;
             }
 
-            public object Current {
-                get { 
+            public object Current
+            {
+                get
+                {
                     checkVersion();
-                    return pq.heap[index].Item; 
+                    return pq.heap[index].Item;
                 }
             }
 
-            public bool MoveNext() {
+            public bool MoveNext()
+            {
                 checkVersion();
-                if (index + 1 == pq.count) 
+                if (index + 1 == pq.count)
                     return false;
                 index++;
                 return true;

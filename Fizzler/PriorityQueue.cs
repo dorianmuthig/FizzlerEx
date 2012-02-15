@@ -46,7 +46,6 @@ namespace Fizzler
     {
         private int count;
         private int capacity;
-        private int version;
         private HeapEntry<T>[] heap;
 
         public PriorityQueue()
@@ -64,7 +63,6 @@ namespace Fizzler
             count--;
             TrickleDown(0, heap[count]);
             heap[count].Clear();
-            version++;
             return result;
         }
 
@@ -76,7 +74,6 @@ namespace Fizzler
                 GrowHeap();
             count++;
             BubbleUp(count - 1, new HeapEntry<T>(item, priority));
-            version++;
         }
 
         private void BubbleUp(int index, HeapEntry<T> he)

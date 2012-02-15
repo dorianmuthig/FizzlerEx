@@ -12,7 +12,6 @@ namespace Fizzler
 
         private Dictionary<TKey, TValue> data;
         private IndexedLinkedList<TKey> lruList = new IndexedLinkedList<TKey>();
-        private ICollection<KeyValuePair<TKey, TValue>> dataAsCollection;
         private Func<TKey, TValue> evalutor;
         private int capacity;
 
@@ -22,7 +21,6 @@ namespace Fizzler
                 throw new ArgumentException("capacity should always be bigger than 0");
 
             this.data = new Dictionary<TKey, TValue>(capacity);
-            this.dataAsCollection = data;
             this.capacity = capacity;
             this.evalutor = evalutor;
         }
@@ -91,14 +89,6 @@ namespace Fizzler
                 {
                     data.Remove(node);
                     index.Remove(value);
-                }
-            }
-
-            public int Count
-            {
-                get
-                {
-                    return data.Count;
                 }
             }
 

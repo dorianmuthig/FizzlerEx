@@ -68,7 +68,6 @@
       <Link>SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="LRUCache.cs" />
-    <Compile Include="SelectorsCachingCompiler.cs" />
     <Compile Include="Either.cs" />
     <Compile Include="IElementOps.cs" />
     <Compile Include="ISelectorGenerator.cs" />

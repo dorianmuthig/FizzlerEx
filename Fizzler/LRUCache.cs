@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 
 
 namespace Fizzler
 {
-    internal class LRUCache<TInput, TResult>
+    public class LRUCache<TInput, TResult> : IDisposable
     {
 
-        private Dictionary<TInput, TResult> data;
-        private IndexedLinkedList<TInput> lruList = new IndexedLinkedList<TInput>();
-        private Func<TInput, TResult> evalutor;
+        private readonly Dictionary<TInput, TResult> data;
+        private readonly IndexedLinkedList<TInput> lruList = new IndexedLinkedList<TInput>();
+        private readonly Func<TInput, TResult> evalutor;
+        private ReaderWriterLockSlim rwl = new ReaderWriterLockSlim();
         private int capacity;
 
         public LRUCache(Func<TInput, TResult> evalutor, int capacity)
@@ -25,41 +27,60 @@ namespace Fizzler
             this.evalutor = evalutor;
         }
 
-        public bool Remove(TInput key)
+        private bool Remove(TInput key)
         {
             bool existed = data.Remove(key);
             lruList.Remove(key);
             return existed;
         }
 
+
         public TResult GetValue(TInput key)
         {
             TResult value;
-            if (data.TryGetValue(key, out value))
-            {
-                lruList.Remove(key);
-                lruList.Add(key);
-            }
-            else
-            {
-                value = evalutor(key);
-                data[key] = value;
-                lruList.Add(key);
+            bool found;
 
-                if (data.Count > capacity)
-                {
-                    Remove(lruList.First);
-                    lruList.RemoveFirst();
-                }
+            rwl.EnterReadLock();
+            try
+            {
+                found = data.TryGetValue(key, out value);
             }
+            finally
+            {
+                rwl.ExitReadLock();
+            }
+
+
+            if (!found) value = evalutor(key);
+
+            rwl.EnterWriteLock();
+            try
+            {
+                if (found)
+                {
+                    lruList.Remove(key);
+                    lruList.Add(key);
+                }
+                else
+                {
+                    data[key] = value;
+                    lruList.Add(key);
+
+                    if (data.Count > capacity)
+                    {
+                        Remove(lruList.First);
+                        lruList.RemoveFirst();
+                    }
+                }
+
+            }
+            finally
+            {
+                rwl.ExitWriteLock();
+            }
+
 
             return value;
-        }
-
-        public void Clear()
-        {
-            data.Clear();
-            lruList.Clear();
         }
 
         public int Capacity
@@ -68,16 +89,27 @@ namespace Fizzler
             {
                 return capacity;
             }
+
             set
             {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException();
-                capacity = value;
-                while (data.Count > capacity)
+
+                rwl.EnterWriteLock();
+                try
                 {
-                    Remove(lruList.First);
-                    lruList.RemoveFirst();
+                    capacity = value;
+                    while (data.Count > capacity)
+                    {
+                        Remove(lruList.First);
+                        lruList.RemoveFirst();
+                    }
                 }
+                finally
+                {
+                    rwl.ExitWriteLock();
+                }
+
             }
         }
 
@@ -127,8 +159,19 @@ namespace Fizzler
         }
 
 
-
-
+        public void Dispose()
+        {
+            if (rwl == null) return;
+            try
+            {
+                rwl.Dispose();
+            }
+            catch (ObjectDisposedException)
+            {
+                // It should ignore duplicate calls to Dispose(), but it doesn't.
+            }
+            rwl = null;
+        }
     }
 
 

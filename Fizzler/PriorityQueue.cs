@@ -42,31 +42,17 @@ namespace JMBucknall.Containers
     }
 
     [Serializable]
-    internal class PriorityQueue : ICollection, ISerializable
+    internal class PriorityQueue : ICollection
     {
         private int count;
         private int capacity;
         private int version;
         private HeapEntry[] heap;
 
-        private const string capacityName = "capacity";
-        private const string countName = "count";
-        private const string heapName = "heap";
-
         public PriorityQueue()
         {
             capacity = 15; // 15 is equal to 4 complete levels
             heap = new HeapEntry[capacity];
-        }
-
-        protected PriorityQueue(SerializationInfo info, StreamingContext context)
-        {
-            capacity = info.GetInt32(capacityName);
-            count = info.GetInt32(countName);
-            HeapEntry[] heapCopy = (HeapEntry[])info.GetValue(heapName, typeof(HeapEntry[]));
-            heap = new HeapEntry[capacity];
-            Array.Copy(heapCopy, 0, heap, 0, count);
-            version = 0;
         }
 
         public object Dequeue()
@@ -171,20 +157,8 @@ namespace JMBucknall.Containers
         }
         #endregion
 
-        #region ISerializable implementation
-        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
-        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue(capacityName, capacity);
-            info.AddValue(countName, count);
-            HeapEntry[] heapCopy = new HeapEntry[count];
-            Array.Copy(heap, 0, heapCopy, 0, count);
-            info.AddValue(heapName, heapCopy, typeof(HeapEntry[]));
-        }
-        #endregion
-
         #region Priority Queue enumerator
-        [Serializable()]
+        [Serializable]
         private class PriorityQueueEnumerator : IEnumerator
         {
             private int index;

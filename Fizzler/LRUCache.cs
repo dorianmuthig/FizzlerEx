@@ -18,7 +18,7 @@ namespace Fizzler
         public LRUCache(Func<TInput, TResult> evalutor, int capacity)
         {
             if (capacity <= 0)
-                throw new ArgumentException("capacity should always be bigger than 0");
+                throw new ArgumentOutOfRangeException();
 
             this.data = new Dictionary<TInput, TResult>(capacity);
             this.capacity = capacity;
@@ -60,6 +60,25 @@ namespace Fizzler
         {
             data.Clear();
             lruList.Clear();
+        }
+
+        public int Capacity
+        {
+            get
+            {
+                return capacity;
+            }
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException();
+                capacity = value;
+                while (data.Count > capacity)
+                {
+                    Remove(lruList.First);
+                    lruList.RemoveFirst();
+                }
+            }
         }
 
 

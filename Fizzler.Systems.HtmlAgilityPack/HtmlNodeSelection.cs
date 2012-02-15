@@ -92,28 +92,12 @@
         }
 
         /// <summary>
-        /// Creates a caching selector compiler that uses a default
-        /// cache strategy when the selector text is regarded as being
-        /// orginally case-insensitive.
+        /// Creates a caching selector compiler
         /// </summary>
         public static Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> CreateCachingCompiler()
         {
-            return CreateCachingCompiler(null);
+            return SelectorsCachingCompiler.Create<Func<HtmlNode, IEnumerable<HtmlNode>>>(Compile);
         }
 
-        /// <summary>
-        /// Creates a caching selector compiler where the compiled selectors
-        /// are maintained in a user-supplied <see cref="IDictionary{TKey,TValue}"/>
-        /// instance.
-        /// </summary>
-        /// <remarks>
-        /// If <paramref name="cache"/> is <c>null</c> then this method uses a
-        /// the <see cref="Dictionary{TKey,TValue}"/> implementation with an 
-        /// ordinally case-sensitive selectors text comparer.
-        /// </remarks>
-        public static Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> CreateCachingCompiler(IDictionary<string, Func<HtmlNode, IEnumerable<HtmlNode>>> cache)
-        {
-            return SelectorsCachingCompiler.Create(Compile, cache);
-        }
     }
 }

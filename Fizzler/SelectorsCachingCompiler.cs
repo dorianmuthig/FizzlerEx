@@ -22,36 +22,11 @@ namespace Fizzler
         /// </summary>
         public static Func<string, T> Create<T>(Func<string, T> compiler)
         {
-            return Create(compiler, null);
-        }
-
-        /// <summary>
-        /// Creates a caching selectors compiler on top on an existing compiler.
-        /// An addition parameter specified a dictionary to use as the cache.
-        /// </summary>
-        /// <remarks>
-        /// If <paramref name="cache"/> is <c>null</c> then this method uses a
-        /// the <see cref="Dictionary{TKey,TValue}"/> implementation with an 
-        /// ordinally case-sensitive selectors text comparer.
-        /// </remarks>
-        public static Func<string, T> Create<T>(Func<string, T> compiler, IDictionary<string, T> cache)
-        {
-            if(compiler == null) throw new ArgumentNullException("compiler");
-            return CreateImpl(compiler, cache ?? new Dictionary<string, T>(StringComparer.Ordinal));
-        }
-
-        private static Func<string, T> CreateImpl<T>(Func<string, T> compiler, IDictionary<string, T> cache)
-        {
+            if (compiler == null)
+                throw new ArgumentNullException();
             Debug.Assert(compiler != null);
-            Debug.Assert(cache != null);
-
-            return selector =>
-            {
-                T compiled;
-                return cache.TryGetValue(selector, out compiled) 
-                     ? compiled 
-                     : cache[selector] = compiler(selector);
-            };
+            var cache = new LRUCache<string, T>(compiler, 30);
+            return selector => cache.GetValue(selector);
         }
     }
 }

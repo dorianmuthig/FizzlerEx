@@ -58,6 +58,21 @@
         }
 
         /// <summary>
+        /// Gets or sets the maximum number of compiled selectors that will be kept in cache.
+        /// </summary>
+        public static int CacheSize
+        {
+            get
+            {
+                return _compilerCache.Capacity;
+            }
+            set
+            {
+                _compilerCache.Capacity = value;
+            }
+        }
+
+        /// <summary>
         /// Parses and compiles CSS selector text into run-time function.
         /// </summary>
         /// <remarks>
@@ -74,32 +89,17 @@
         // Caching
         //
 
-        [ThreadStatic] 
-        private static Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> _defaultCachingCompiler;
-
+        private static LRUCache<string, Func<HtmlNode, IEnumerable<HtmlNode>>> _compilerCache = new LRUCache<string, Func<HtmlNode, IEnumerable<HtmlNode>>>(Compile, 30);
+        private static Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> _defaultCachingCompiler = _compilerCache.GetValue;
+            
         /// <summary>
         /// Compiles a selector. If the selector has been previously 
         /// compiled then this method returns it rather than parsing
         /// and compiling the selector on each invocation.
         /// </summary>
-        /// <remarks>
-        /// The cache is per-thread and therefore thread-safe without
-        /// lock contention.
-        /// </remarks>
         public static Func<HtmlNode, IEnumerable<HtmlNode>> CachableCompile(string selector)
         {
-            if (_defaultCachingCompiler == null)
-                _defaultCachingCompiler = SelectorsCachingCompiler.Create(Compile);
-
             return _defaultCachingCompiler(selector);
-        }
-
-        /// <summary>
-        /// Creates a caching selector compiler
-        /// </summary>
-        public static Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> CreateCachingCompiler()
-        {
-            return SelectorsCachingCompiler.Create<Func<HtmlNode, IEnumerable<HtmlNode>>>(Compile);
         }
 
     }

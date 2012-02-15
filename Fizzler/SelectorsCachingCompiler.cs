@@ -24,7 +24,6 @@ namespace Fizzler
         {
             if (compiler == null)
                 throw new ArgumentNullException();
-            Debug.Assert(compiler != null);
             var cache = new LRUCache<string, T>(compiler, 30);
             return selector => cache.GetValue(selector);
         }

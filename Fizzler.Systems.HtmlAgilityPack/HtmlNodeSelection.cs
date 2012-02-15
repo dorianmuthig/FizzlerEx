@@ -75,7 +75,7 @@
         //
 
         [ThreadStatic] 
-        private static readonly Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> _defaultCachingCompiler = CreateCachingCompiler();
+        private static Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> _defaultCachingCompiler;
 
         /// <summary>
         /// Compiles a selector. If the selector has been previously 
@@ -88,6 +88,9 @@
         /// </remarks>
         public static Func<HtmlNode, IEnumerable<HtmlNode>> CachableCompile(string selector)
         {
+            if (_defaultCachingCompiler == null)
+                _defaultCachingCompiler = SelectorsCachingCompiler.Create(Compile);
+
             return _defaultCachingCompiler(selector);
         }
 

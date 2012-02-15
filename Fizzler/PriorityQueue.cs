@@ -128,14 +128,11 @@ namespace JMBucknall.Containers
             bubbleUp(index, he);
         }
 
-        #region IEnumerable implementation
         public IEnumerator GetEnumerator()
         {
             return new PriorityQueueEnumerator(this);
         }
-        #endregion
 
-        #region ICollection implementation
         public int Count
         {
             get { return count; }
@@ -155,9 +152,7 @@ namespace JMBucknall.Containers
         {
             get { return false; }
         }
-        #endregion
 
-        #region Priority Queue enumerator
         [Serializable]
         private class PriorityQueueEnumerator : IEnumerator
         {
@@ -205,7 +200,6 @@ namespace JMBucknall.Containers
 
             #endregion
         }
-        #endregion
 
     }
 }

@@ -16,8 +16,8 @@ using System.Runtime.Serialization;
 namespace JMBucknall.Containers
 {
 
-    [Serializable()]
-    public struct HeapEntry
+    [Serializable]
+    internal struct HeapEntry
     {
         private object item;
         private IComparable priority;
@@ -41,8 +41,8 @@ namespace JMBucknall.Containers
         }
     }
 
-    [Serializable()]
-    public class PriorityQueue : ICollection, ISerializable
+    [Serializable]
+    internal class PriorityQueue : ICollection, ISerializable
     {
         private int count;
         private int capacity;

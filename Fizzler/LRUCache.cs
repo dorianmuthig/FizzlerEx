@@ -10,22 +10,21 @@ namespace Fizzler
     internal class LRUCache<TKey, TValue>
     {
 
-        Dictionary<TKey, TValue> data;
-        IndexedLinkedList<TKey> lruList = new IndexedLinkedList<TKey>();
-        ICollection<KeyValuePair<TKey, TValue>> dataAsCollection;
-        int capacity;
+        private Dictionary<TKey, TValue> data;
+        private IndexedLinkedList<TKey> lruList = new IndexedLinkedList<TKey>();
+        private ICollection<KeyValuePair<TKey, TValue>> dataAsCollection;
+        private Func<TKey, TValue> evalutor;
+        private int capacity;
 
-        public LRUCache(int capacity)
+        public LRUCache(Func<TKey, TValue> evalutor, int capacity)
         {
-
             if (capacity <= 0)
-            {
                 throw new ArgumentException("capacity should always be bigger than 0");
-            }
 
-            data = new Dictionary<TKey, TValue>(capacity);
-            dataAsCollection = data;
+            this.data = new Dictionary<TKey, TValue>(capacity);
+            this.dataAsCollection = data;
             this.capacity = capacity;
+            this.evalutor = evalutor;
         }
 
         public bool Remove(TKey key)
@@ -68,8 +67,8 @@ namespace Fizzler
         private class IndexedLinkedList<T>
         {
 
-            LinkedList<T> data = new LinkedList<T>();
-            Dictionary<T, LinkedListNode<T>> index = new Dictionary<T, LinkedListNode<T>>();
+            private LinkedList<T> data = new LinkedList<T>();
+            private Dictionary<T, LinkedListNode<T>> index = new Dictionary<T, LinkedListNode<T>>();
 
             public void Add(T value)
             {

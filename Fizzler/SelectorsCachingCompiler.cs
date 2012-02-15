@@ -32,12 +32,12 @@ namespace Fizzler
         /// <remarks>
         /// If <paramref name="cache"/> is <c>null</c> then this method uses a
         /// the <see cref="Dictionary{TKey,TValue}"/> implementation with an 
-        /// ordinally case-insensitive selectors text comparer.
+        /// ordinally case-sensitive selectors text comparer.
         /// </remarks>
         public static Func<string, T> Create<T>(Func<string, T> compiler, IDictionary<string, T> cache)
         {
             if(compiler == null) throw new ArgumentNullException("compiler");
-            return CreateImpl(compiler, cache ?? new Dictionary<string, T>(StringComparer.OrdinalIgnoreCase));
+            return CreateImpl(compiler, cache ?? new Dictionary<string, T>(StringComparer.Ordinal));
         }
 
         private static Func<string, T> CreateImpl<T>(Func<string, T> compiler, IDictionary<string, T> cache)

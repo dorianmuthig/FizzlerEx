@@ -109,7 +109,7 @@
         /// <remarks>
         /// If <paramref name="cache"/> is <c>null</c> then this method uses a
         /// the <see cref="Dictionary{TKey,TValue}"/> implementation with an 
-        /// ordinally case-insensitive selectors text comparer.
+        /// ordinally case-sensitive selectors text comparer.
         /// </remarks>
         public static Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> CreateCachingCompiler(IDictionary<string, Func<HtmlNode, IEnumerable<HtmlNode>>> cache)
         {

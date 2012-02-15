@@ -49,8 +49,13 @@ namespace Fizzler
         private HeapEntry<T>[] heap;
 
         public PriorityQueue()
+            : this(15) // 15 is equal to 4 complete levels
         {
-            capacity = 15; // 15 is equal to 4 complete levels
+        }
+
+        public PriorityQueue(int capacity)
+        {
+            this.capacity = capacity;
             heap = new HeapEntry<T>[capacity];
         }
 

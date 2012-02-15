@@ -54,7 +54,7 @@
         /// </remarks>
         public static IEnumerable<HtmlNode> QuerySelectorAll(this HtmlNode node, string selector, Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> compiler)
         {
-            return (compiler ?? Compile)(selector)(node);
+            return (compiler ?? CachableCompile)(selector)(node);
         }
 
         /// <summary>

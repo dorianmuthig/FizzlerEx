@@ -62,7 +62,7 @@ namespace JMBucknall.Containers
 
             T result = heap[0].Item;
             count--;
-            trickleDown(0, heap[count]);
+            TrickleDown(0, heap[count]);
             heap[count].Clear();
             version++;
             return result;
@@ -73,37 +73,37 @@ namespace JMBucknall.Containers
             if (priority == null)
                 throw new ArgumentNullException("priority");
             if (count == capacity)
-                growHeap();
+                GrowHeap();
             count++;
-            bubbleUp(count - 1, new HeapEntry<T>(item, priority));
+            BubbleUp(count - 1, new HeapEntry<T>(item, priority));
             version++;
         }
 
-        private void bubbleUp(int index, HeapEntry<T> he)
+        private void BubbleUp(int index, HeapEntry<T> he)
         {
-            int parent = getParent(index);
+            int parent = GetParent(index);
             // note: (index > 0) means there is a parent
             while ((index > 0) &&
                   (heap[parent].Priority.CompareTo(he.Priority) < 0))
             {
                 heap[index] = heap[parent];
                 index = parent;
-                parent = getParent(index);
+                parent = GetParent(index);
             }
             heap[index] = he;
         }
 
-        private int getLeftChild(int index)
+        private int GetLeftChild(int index)
         {
             return (index * 2) + 1;
         }
 
-        private int getParent(int index)
+        private int GetParent(int index)
         {
             return (index - 1) / 2;
         }
 
-        private void growHeap()
+        private void GrowHeap()
         {
             capacity = (capacity * 2) + 1;
             var newHeap = new HeapEntry<T>[capacity];
@@ -111,9 +111,9 @@ namespace JMBucknall.Containers
             heap = newHeap;
         }
 
-        private void trickleDown(int index, HeapEntry<T> he)
+        private void TrickleDown(int index, HeapEntry<T> he)
         {
-            int child = getLeftChild(index);
+            int child = GetLeftChild(index);
             while (child < count)
             {
                 if (((child + 1) < count) &&
@@ -123,9 +123,9 @@ namespace JMBucknall.Containers
                 }
                 heap[index] = heap[child];
                 index = child;
-                child = getLeftChild(index);
+                child = GetLeftChild(index);
             }
-            bubbleUp(index, he);
+            BubbleUp(index, he);
         }
 
 

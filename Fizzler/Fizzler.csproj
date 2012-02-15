@@ -67,8 +67,7 @@
     <Compile Include="..\Common\SolutionInfo.cs">
       <Link>SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="CachingDictionary.cs" />
-    <Compile Include="PriorityQueue.cs" />
+    <Compile Include="LRUCache.cs" />
     <Compile Include="SelectorsCachingCompiler.cs" />
     <Compile Include="Either.cs" />
     <Compile Include="IElementOps.cs" />

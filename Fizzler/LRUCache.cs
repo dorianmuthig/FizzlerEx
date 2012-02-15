@@ -36,23 +36,26 @@ namespace Fizzler
 
         public TValue GetValue(TKey key)
         {
-            var value = data[key];
-            lruList.Remove(key);
-            lruList.Add(key);
-            return value;
-        }
-
-        private void SetValue(TKey key, TValue value)
-        {
-            data[key] = value;
-            lruList.Remove(key);
-            lruList.Add(key);
-
-            if (data.Count > capacity)
+            TValue value;
+            if (data.TryGetValue(key, out value))
             {
-                Remove(lruList.First);
-                lruList.RemoveFirst();
+                lruList.Remove(key);
+                lruList.Add(key);
             }
+            else
+            {
+                value = evalutor(key);
+                data[key] = value;
+                lruList.Add(key);
+
+                if (data.Count > capacity)
+                {
+                    Remove(lruList.First);
+                    lruList.RemoveFirst();
+                }
+            }
+
+            return value;
         }
 
         public void Clear()

@@ -89,7 +89,9 @@
         // Caching
         //
 
-        private static LRUCache<string, Func<HtmlNode, IEnumerable<HtmlNode>>> _compilerCache = new LRUCache<string, Func<HtmlNode, IEnumerable<HtmlNode>>>(Compile, 30);
+        private const int DefaultCacheSize = 60;
+
+        private static LRUCache<string, Func<HtmlNode, IEnumerable<HtmlNode>>> _compilerCache = new LRUCache<string, Func<HtmlNode, IEnumerable<HtmlNode>>>(Compile, DefaultCacheSize);
         private static Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> _defaultCachingCompiler = _compilerCache.GetValue;
             
         /// <summary>

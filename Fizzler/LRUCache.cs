@@ -7,34 +7,34 @@ using System.Text;
 
 namespace Fizzler
 {
-    internal class LRUCache<TKey, TValue>
+    internal class LRUCache<TInput, TResult>
     {
 
-        private Dictionary<TKey, TValue> data;
-        private IndexedLinkedList<TKey> lruList = new IndexedLinkedList<TKey>();
-        private Func<TKey, TValue> evalutor;
+        private Dictionary<TInput, TResult> data;
+        private IndexedLinkedList<TInput> lruList = new IndexedLinkedList<TInput>();
+        private Func<TInput, TResult> evalutor;
         private int capacity;
 
-        public LRUCache(Func<TKey, TValue> evalutor, int capacity)
+        public LRUCache(Func<TInput, TResult> evalutor, int capacity)
         {
             if (capacity <= 0)
                 throw new ArgumentException("capacity should always be bigger than 0");
 
-            this.data = new Dictionary<TKey, TValue>(capacity);
+            this.data = new Dictionary<TInput, TResult>(capacity);
             this.capacity = capacity;
             this.evalutor = evalutor;
         }
 
-        public bool Remove(TKey key)
+        public bool Remove(TInput key)
         {
             bool existed = data.Remove(key);
             lruList.Remove(key);
             return existed;
         }
 
-        public TValue GetValue(TKey key)
+        public TResult GetValue(TInput key)
         {
-            TValue value;
+            TResult value;
             if (data.TryGetValue(key, out value))
             {
                 lruList.Remove(key);

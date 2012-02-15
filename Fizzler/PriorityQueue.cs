@@ -13,7 +13,7 @@ using System.Collections;
 using System.Security.Permissions;
 using System.Runtime.Serialization;
 
-namespace JMBucknall.Containers
+namespace Fizzler
 {
 
     [Serializable]

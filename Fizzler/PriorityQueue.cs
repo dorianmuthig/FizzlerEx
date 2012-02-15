@@ -17,16 +17,16 @@ namespace JMBucknall.Containers
 {
 
     [Serializable]
-    internal struct HeapEntry
+    internal struct HeapEntry<T>
     {
-        private object item;
+        private T item;
         private IComparable priority;
-        public HeapEntry(object item, IComparable priority)
+        public HeapEntry(T item, IComparable priority)
         {
             this.item = item;
             this.priority = priority;
         }
-        public object Item
+        public T Item
         {
             get { return item; }
         }
@@ -36,31 +36,31 @@ namespace JMBucknall.Containers
         }
         public void Clear()
         {
-            item = null;
+            item = default(T);
             priority = null;
         }
     }
 
     [Serializable]
-    internal class PriorityQueue : ICollection
+    internal class PriorityQueue<T>
     {
         private int count;
         private int capacity;
         private int version;
-        private HeapEntry[] heap;
+        private HeapEntry<T>[] heap;
 
         public PriorityQueue()
         {
             capacity = 15; // 15 is equal to 4 complete levels
-            heap = new HeapEntry[capacity];
+            heap = new HeapEntry<T>[capacity];
         }
 
-        public object Dequeue()
+        public T Dequeue()
         {
             if (count == 0)
                 throw new InvalidOperationException();
 
-            object result = heap[0].Item;
+            T result = heap[0].Item;
             count--;
             trickleDown(0, heap[count]);
             heap[count].Clear();
@@ -68,18 +68,18 @@ namespace JMBucknall.Containers
             return result;
         }
 
-        public void Enqueue(object item, IComparable priority)
+        public void Enqueue(T item, IComparable priority)
         {
             if (priority == null)
                 throw new ArgumentNullException("priority");
             if (count == capacity)
                 growHeap();
             count++;
-            bubbleUp(count - 1, new HeapEntry(item, priority));
+            bubbleUp(count - 1, new HeapEntry<T>(item, priority));
             version++;
         }
 
-        private void bubbleUp(int index, HeapEntry he)
+        private void bubbleUp(int index, HeapEntry<T> he)
         {
             int parent = getParent(index);
             // note: (index > 0) means there is a parent
@@ -106,12 +106,12 @@ namespace JMBucknall.Containers
         private void growHeap()
         {
             capacity = (capacity * 2) + 1;
-            HeapEntry[] newHeap = new HeapEntry[capacity];
+            var newHeap = new HeapEntry<T>[capacity];
             System.Array.Copy(heap, 0, newHeap, 0, count);
             heap = newHeap;
         }
 
-        private void trickleDown(int index, HeapEntry he)
+        private void trickleDown(int index, HeapEntry<T> he)
         {
             int child = getLeftChild(index);
             while (child < count)
@@ -128,78 +128,6 @@ namespace JMBucknall.Containers
             bubbleUp(index, he);
         }
 
-        public IEnumerator GetEnumerator()
-        {
-            return new PriorityQueueEnumerator(this);
-        }
-
-        public int Count
-        {
-            get { return count; }
-        }
-
-        public void CopyTo(Array array, int index)
-        {
-            System.Array.Copy(heap, 0, array, index, count);
-        }
-
-        public object SyncRoot
-        {
-            get { return this; }
-        }
-
-        public bool IsSynchronized
-        {
-            get { return false; }
-        }
-
-        [Serializable]
-        private class PriorityQueueEnumerator : IEnumerator
-        {
-            private int index;
-            private PriorityQueue pq;
-            private int version;
-
-            public PriorityQueueEnumerator(PriorityQueue pq)
-            {
-                this.pq = pq;
-                Reset();
-            }
-
-            private void checkVersion()
-            {
-                if (version != pq.version)
-                    throw new InvalidOperationException();
-            }
-
-            #region IEnumerator Members
-
-            public void Reset()
-            {
-                index = -1;
-                version = pq.version;
-            }
-
-            public object Current
-            {
-                get
-                {
-                    checkVersion();
-                    return pq.heap[index].Item;
-                }
-            }
-
-            public bool MoveNext()
-            {
-                checkVersion();
-                if (index + 1 == pq.count)
-                    return false;
-                index++;
-                return true;
-            }
-
-            #endregion
-        }
 
     }
 }

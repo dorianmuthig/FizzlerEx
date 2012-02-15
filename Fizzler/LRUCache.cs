@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Fizzler
 {
-    internal class LRUCache<TKey, TValue> : IDictionary<TKey, TValue>
+    internal class LRUCache<TKey, TValue>
     {
 
         Dictionary<TKey, TValue> data;
@@ -28,31 +28,6 @@ namespace Fizzler
             this.capacity = capacity;
         }
 
-        public void Add(TKey key, TValue value)
-        {
-            if (!ContainsKey(key))
-            {
-                this[key] = value;
-            }
-            else
-            {
-                throw new ArgumentException("An attempt was made to insert a duplicate key in the cache.");
-            }
-        }
-
-        public bool ContainsKey(TKey key)
-        {
-            return data.ContainsKey(key);
-        }
-
-        public ICollection<TKey> Keys
-        {
-            get
-            {
-                return data.Keys;
-            }
-        }
-
         public bool Remove(TKey key)
         {
             bool existed = data.Remove(key);
@@ -60,42 +35,25 @@ namespace Fizzler
             return existed;
         }
 
-        public bool TryGetValue(TKey key, out TValue value)
+        public TValue GetValue(TKey key)
         {
-            return data.TryGetValue(key, out value);
+            var value = data[key];
+            lruList.Remove(key);
+            lruList.Add(key);
+            return value;
         }
 
-        public ICollection<TValue> Values
+        private void SetValue(TKey key, TValue value)
         {
-            get { return data.Values; }
-        }
+            data[key] = value;
+            lruList.Remove(key);
+            lruList.Add(key);
 
-        public TValue this[TKey key]
-        {
-            get
+            if (data.Count > capacity)
             {
-                var value = data[key];
-                lruList.Remove(key);
-                lruList.Add(key);
-                return value;
+                Remove(lruList.First);
+                lruList.RemoveFirst();
             }
-            set
-            {
-                data[key] = value;
-                lruList.Remove(key);
-                lruList.Add(key);
-
-                if (data.Count > capacity)
-                {
-                    Remove(lruList.First);
-                    lruList.RemoveFirst();
-                }
-            }
-        }
-
-        public void Add(KeyValuePair<TKey, TValue> item)
-        {
-            Add(item.Key, item.Value);
         }
 
         public void Clear()
@@ -103,52 +61,6 @@ namespace Fizzler
             data.Clear();
             lruList.Clear();
         }
-
-        public bool Contains(KeyValuePair<TKey, TValue> item)
-        {
-            return dataAsCollection.Contains(item);
-        }
-
-        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-        {
-            dataAsCollection.CopyTo(array, arrayIndex);
-        }
-
-        public int Count
-        {
-            get { return data.Count; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
-
-        public bool Remove(KeyValuePair<TKey, TValue> item)
-        {
-
-            bool removed = dataAsCollection.Remove(item);
-            if (removed)
-            {
-                lruList.Remove(item.Key);
-            }
-            return removed;
-        }
-
-
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
-        {
-            return dataAsCollection.GetEnumerator();
-        }
-
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return ((System.Collections.IEnumerable)data).GetEnumerator();
-        }
-
-
-
 
 
 

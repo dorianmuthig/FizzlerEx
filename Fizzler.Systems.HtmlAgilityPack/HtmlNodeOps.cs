@@ -48,7 +48,11 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public virtual Selector<HtmlNode> Id(string id)
         {
-            return nodes => nodes.Elements().Where(n => n.Id == id);
+            return nodes =>
+            {
+                var element = nodes.Elements().FirstOrDefault(n => n.Id == id);
+                return element != null ? new[] { element } : Enumerable.Empty<HtmlNode>();
+            };
         }
 
         /// <summary>

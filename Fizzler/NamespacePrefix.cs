@@ -5,7 +5,9 @@
     /// <summary>
     /// Represent a type or attribute name.
     /// </summary>
+#if !NETFX_CORE
     [Serializable]
+#endif
     public struct NamespacePrefix
     {
         /// <summary>

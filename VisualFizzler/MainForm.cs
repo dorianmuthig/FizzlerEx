@@ -232,6 +232,7 @@ namespace VisualFizzler
         private static void HighlightMarkup(RichTextBox rtb, Color tagColor, Color tagNameColor, Color attributeNameColor)
         {
             Debug.Assert(rtb != null);
+            rtb.Visible = false;
             var stopwatch = Stopwatch.StartNew();
             foreach (Match tag in _tagExpression.Matches(rtb.Text))
             {
@@ -252,6 +253,7 @@ namespace VisualFizzler
 
                 if (stopwatch.ElapsedMilliseconds > 5000) break;
             }
+            rtb.Visible = true;
         }
 
         private static void Highlight(RichTextBox rtb, IEnumerable<Match> matches, Color? color, Color? backColor, Font font)

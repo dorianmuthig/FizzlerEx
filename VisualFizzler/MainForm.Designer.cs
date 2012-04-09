@@ -34,7 +34,10 @@
             this._menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmdPasteFromClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.chkFormatHtml = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fizzlerExWebSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,7 +51,6 @@
             this._statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this._openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this._toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.cmdPasteFromClipboard = new System.Windows.Forms.ToolStripMenuItem();
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this._menuStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -87,6 +89,8 @@
             toolStripMenuItem1,
             this.cmdPasteFromClipboard,
             this.toolStripSeparator1,
+            this.chkFormatHtml,
+            this.toolStripSeparator2,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -103,10 +107,33 @@
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.FileOpen_Click);
             // 
+            // cmdPasteFromClipboard
+            // 
+            this.cmdPasteFromClipboard.Image = ((System.Drawing.Image)(resources.GetObject("cmdPasteFromClipboard.Image")));
+            this.cmdPasteFromClipboard.Name = "cmdPasteFromClipboard";
+            this.cmdPasteFromClipboard.Size = new System.Drawing.Size(184, 22);
+            this.cmdPasteFromClipboard.Text = "Paste from clipboard";
+            this.cmdPasteFromClipboard.Click += new System.EventHandler(this.cmdPasteFromClipboard_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(181, 6);
+            // 
+            // formatHTMLToolStripMenuItem
+            // 
+            this.chkFormatHtml.Checked = true;
+            this.chkFormatHtml.CheckOnClick = true;
+            this.chkFormatHtml.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkFormatHtml.Name = "formatHTMLToolStripMenuItem";
+            this.chkFormatHtml.Size = new System.Drawing.Size(184, 22);
+            this.chkFormatHtml.Text = "Format HTML";
+            this.chkFormatHtml.CheckedChanged += new System.EventHandler(this.chkFormatHtml_CheckedChanged);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(181, 6);
             // 
             // exitToolStripMenuItem
             // 
@@ -235,14 +262,6 @@
             this._openFileDialog.Filter = "HTML Files|*.htm;*.html|All Files|*.*";
             this._openFileDialog.Title = "Open File";
             // 
-            // cmdPasteFromClipboard
-            // 
-            this.cmdPasteFromClipboard.Image = ((System.Drawing.Image)(resources.GetObject("cmdPasteFromClipboard.Image")));
-            this.cmdPasteFromClipboard.Name = "cmdPasteFromClipboard";
-            this.cmdPasteFromClipboard.Size = new System.Drawing.Size(184, 22);
-            this.cmdPasteFromClipboard.Text = "Paste from clipboard";
-            this.cmdPasteFromClipboard.Click += new System.EventHandler(this.cmdPasteFromClipboard_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -291,6 +310,8 @@
         private System.Windows.Forms.ToolStripMenuItem fizzlerExWebSiteToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel errorText;
         private System.Windows.Forms.ToolStripMenuItem cmdPasteFromClipboard;
+        private System.Windows.Forms.ToolStripMenuItem chkFormatHtml;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
 

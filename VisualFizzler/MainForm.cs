@@ -433,6 +433,41 @@ namespace VisualFizzler
 
         private void _selectorBox_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Down)
+            {
+                e.Handled = true;
+                _matchBox.SelectedIndex = _matchBox.Items.Count == 0 ? -1 : 0;
+                _matchBox_SelectedIndexChanged(sender, EventArgs.Empty);
+                _matchBox.Focus();
+            }
+            else if (e.KeyCode == Keys.Up)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void _matchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up && _matchBox.SelectedIndex <= 0)
+            {
+                e.Handled = true;
+                _matchBox.SelectedIndex = -1;
+                _selectorBox.Focus();
+            }
+        }
+
+        private void MainForm_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                var text = Clipboard.GetText();
+                if (text != null && Regex.IsMatch(text, @"\s*(https?:|<)")) e.IsInputKey = true;
+            }
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+
             if (e.Control && e.KeyCode == Keys.V)
             {
                 var text = Clipboard.GetText();
@@ -456,28 +491,6 @@ namespace VisualFizzler
                 }
             }
 
-
-            if (e.KeyCode == Keys.Down)
-            {
-                e.Handled = true;
-                _matchBox.SelectedIndex = _matchBox.Items.Count == 0 ? -1 : 0;
-                _matchBox_SelectedIndexChanged(sender, EventArgs.Empty);
-                _matchBox.Focus();
-            }
-            else if (e.KeyCode == Keys.Up)
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void _matchBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Up && _matchBox.SelectedIndex <= 0)
-            {
-                e.Handled = true;
-                _matchBox.SelectedIndex = -1;
-                _selectorBox.Focus();
-            }
         }
 
     }

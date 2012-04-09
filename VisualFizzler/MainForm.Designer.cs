@@ -275,10 +275,13 @@
             this.Controls.Add(this._status);
             this.Controls.Add(this._menuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MainMenuStrip = this._menuStrip;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.Text = "Visual Fizzler (FizzlerEx)";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
+            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainForm_PreviewKeyDown);
             this._menuStrip.ResumeLayout(false);
             this._menuStrip.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);

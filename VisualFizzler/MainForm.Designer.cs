@@ -188,6 +188,7 @@
             this._selectorBox.TabIndex = 1;
             this._toolTip.SetToolTip(this._selectorBox, "Enter CSS selector");
             this._selectorBox.TextChanged += new System.EventHandler(this.SelectorBox_TextChanged);
+            this._selectorBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this._selectorBox_KeyDown);
             // 
             // splitContainer2
             // 
@@ -219,6 +220,7 @@
             this._matchBox.Size = new System.Drawing.Size(250, 409);
             this._matchBox.TabIndex = 0;
             this._matchBox.SelectedIndexChanged += new System.EventHandler(this._matchBox_SelectedIndexChanged);
+            this._matchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this._matchBox_KeyDown);
             // 
             // _documentBox
             // 

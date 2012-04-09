@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Mime;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Linq;
 using Fizzler;
 using Fizzler.Systems.HtmlAgilityPack;
@@ -200,11 +201,18 @@ namespace VisualFizzler
             document.OptionOutputAsXml = true;
             var str = document.DocumentNode.WriteTo().Replace("\r", "");
             document.OptionOutputAsXml = false;
-            var x = XDocument.Parse(str);
-            var formatted = x.ToString().Replace("\r", "");
-            document = new HtmlDocument();
-            document.LoadHtml2(formatted);
-            return formatted;
+            try
+            {
+                var x = XDocument.Parse(str);
+                var formatted = x.ToString().Replace("\r", "");
+                document = new HtmlDocument();
+                document.LoadHtml2(formatted);
+                return formatted;
+            }
+            catch (XmlException)
+            {
+                return RemoveCarriageReturns(ref document);
+            }
         }
 
         private static string RemoveCarriageReturns(ref HtmlDocument document)
@@ -390,10 +398,11 @@ namespace VisualFizzler
 
         private void _matchBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+            ClearOldSelection();
             var selected = _matchBox.SelectedIndex;
             if (selected != -1)
             {
-                ClearOldSelection();
                 var match = _selectorMatches[selected];
                 var line = _documentBox.GetLineFromCharIndex(match.StartIndex);
                 var caret = _documentBox.GetFirstCharIndexFromLine(Math.Max(0, line - 4));
@@ -415,6 +424,31 @@ namespace VisualFizzler
         }
 
         private TagMatch _oldSelection;
+
+        private void _selectorBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Down)
+            {
+                e.Handled = true;
+                _matchBox.SelectedIndex = _matchBox.Items.Count == 0 ? -1 : 0;
+                _matchBox_SelectedIndexChanged(sender, EventArgs.Empty);
+                _matchBox.Focus();
+            }
+            else if (e.KeyCode == Keys.Up)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void _matchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up && _matchBox.SelectedIndex <= 0)
+            {
+                e.Handled = true;
+                _matchBox.SelectedIndex = -1;
+                _selectorBox.Focus();
+            }
+        }
 
     }
 }

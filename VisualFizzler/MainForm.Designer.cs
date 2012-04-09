@@ -273,6 +273,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this._status);
             this.Controls.Add(this._menuStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this._menuStrip;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";

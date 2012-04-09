@@ -225,6 +225,7 @@
             // _documentBox
             // 
             this._documentBox.BackColor = System.Drawing.SystemColors.Info;
+            this._documentBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this._documentBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this._documentBox.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this._documentBox.Location = new System.Drawing.Point(0, 0);

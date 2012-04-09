@@ -193,7 +193,9 @@ namespace VisualFizzler
         private void cmdPasteFromClipboard_Click(object sender, EventArgs e)
         {
             var document = new HtmlDocument();
-            document.LoadHtml2(Clipboard.GetText());
+            var html = Clipboard.GetText(TextDataFormat.Html);
+            if (!string.IsNullOrEmpty(html)) document.LoadHtml2(html);
+            else document.LoadHtml2(Clipboard.GetText());
             Open(document);
         }
 
@@ -461,8 +463,16 @@ namespace VisualFizzler
         {
             if (e.Control && e.KeyCode == Keys.V)
             {
-                var text = Clipboard.GetText();
-                if (text != null && Regex.IsMatch(text, @"\s*(https?:|<)")) e.IsInputKey = true;
+                if (Clipboard.ContainsText(TextDataFormat.Html))
+                {
+                    e.IsInputKey = true;
+                }
+                else
+                {
+                    var text = Clipboard.GetText();
+                    if (text != null && Regex.IsMatch(text, @"\s*(https?:|<)"))
+                        e.IsInputKey = true;
+                }
             }
         }
 
@@ -481,13 +491,11 @@ namespace VisualFizzler
                         e.Handled = true;
                         ImportFromWeb(new Uri(text));
                     }
-                    else if (text.StartsWith("<"))
+                    else if (text.StartsWith("<") || Clipboard.ContainsText(TextDataFormat.Html))
                     {
                         e.SuppressKeyPress = true;
                         e.Handled = true;
-                        var document = new HtmlDocument();
-                        document.LoadHtml2(text);
-                        Open(document);
+                        cmdPasteFromClipboard_Click(sender, EventArgs.Empty);
                     }
                 }
             }

@@ -56,66 +56,8 @@ namespace VisualFizzler
             Open(document);
         }
 
-        private void ImportFromWebMenu_Click(object sender, EventArgs args)
+        private void ImportFromWeb(Uri url)
         {
-            Uri url = null;
-
-            var input = _lastKnownGoodImportedUrl != null
-                      ? _lastKnownGoodImportedUrl.ToString()
-                      : string.Empty;
-
-            do
-            {
-                input = Interaction.InputBox("Enter URL:", "Import From Web", input,
-                    (int)(Location.X + (Size.Height / 10f)),
-                    (int)(Location.Y + (Size.Height / 10f))).Trim();
-
-                if (string.IsNullOrEmpty(input))
-                    return;
-
-                //
-                // If some entered just the DNS name to get the home page 
-                // then we prepend "http://" for the user to prevent typing.
-                //
-                // http://www.shauninman.com/archive/2006/05/08/validating_domain_names
-                //
-
-                if (Regex.IsMatch(input, @"^([a-z0-9] ([-a-z0-9]*[a-z0-9])? \.)+ 
-                                            ( (a[cdefgilmnoqrstuwxz]|aero|arpa)
-                                              |(b[abdefghijmnorstvwyz]|biz)
-                                              |(c[acdfghiklmnorsuvxyz]|cat|com|coop)
-                                              |d[ejkmoz]
-                                              |(e[ceghrstu]|edu)
-                                              |f[ijkmor]
-                                              |(g[abdefghilmnpqrstuwy]|gov)
-                                              |h[kmnrtu]
-                                              |(i[delmnoqrst]|info|int)
-                                              |(j[emop]|jobs)
-                                              |k[eghimnprwyz]
-                                              |l[abcikrstuvy]
-                                              |(m[acdghklmnopqrstuvwxyz]|mil|mobi|museum)
-                                              |(n[acefgilopruz]|name|net)
-                                              |(om|org)
-                                              |(p[aefghklmnrstwy]|pro)
-                                              |qa
-                                              |r[eouw]
-                                              |s[abcdeghijklmnortvyz]
-                                              |(t[cdfghjklmnoprtvwz]|travel)
-                                              |u[agkmsyz]
-                                              |v[aceginu]
-                                              |w[fs]
-                                              |y[etu]
-                                              |z[amw])", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture))
-                {
-                    input = "http://" + input;
-                }
-
-                if (!Uri.IsWellFormedUriString(input, UriKind.Absolute))
-                    MessageBox.Show(this, "The entered URL does not appear to be correctly formatted.", "Invalid URL", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                else
-                    url = new Uri(input, UriKind.Absolute);
-            }
-            while (url == null);
 
             //
             // Download
@@ -181,6 +123,70 @@ namespace VisualFizzler
             }
 
             _lastKnownGoodImportedUrl = url;
+
+        }
+
+        private void ImportFromWebMenu_Click(object sender, EventArgs args)
+        {
+            Uri url = null;
+
+            var input = _lastKnownGoodImportedUrl != null
+                      ? _lastKnownGoodImportedUrl.ToString()
+                      : string.Empty;
+
+            do
+            {
+                input = Interaction.InputBox("Enter URL:", "Import From Web", input,
+                    (int)(Location.X + (Size.Height / 10f)),
+                    (int)(Location.Y + (Size.Height / 10f))).Trim();
+
+                if (string.IsNullOrEmpty(input))
+                    return;
+
+                //
+                // If some entered just the DNS name to get the home page 
+                // then we prepend "http://" for the user to prevent typing.
+                //
+                // http://www.shauninman.com/archive/2006/05/08/validating_domain_names
+                //
+
+                if (Regex.IsMatch(input, @"^([a-z0-9] ([-a-z0-9]*[a-z0-9])? \.)+ 
+                                            ( (a[cdefgilmnoqrstuwxz]|aero|arpa)
+                                              |(b[abdefghijmnorstvwyz]|biz)
+                                              |(c[acdfghiklmnorsuvxyz]|cat|com|coop)
+                                              |d[ejkmoz]
+                                              |(e[ceghrstu]|edu)
+                                              |f[ijkmor]
+                                              |(g[abdefghilmnpqrstuwy]|gov)
+                                              |h[kmnrtu]
+                                              |(i[delmnoqrst]|info|int)
+                                              |(j[emop]|jobs)
+                                              |k[eghimnprwyz]
+                                              |l[abcikrstuvy]
+                                              |(m[acdghklmnopqrstuvwxyz]|mil|mobi|museum)
+                                              |(n[acefgilopruz]|name|net)
+                                              |(om|org)
+                                              |(p[aefghklmnrstwy]|pro)
+                                              |qa
+                                              |r[eouw]
+                                              |s[abcdeghijklmnortvyz]
+                                              |(t[cdfghjklmnoprtvwz]|travel)
+                                              |u[agkmsyz]
+                                              |v[aceginu]
+                                              |w[fs]
+                                              |y[etu]
+                                              |z[amw])", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture))
+                {
+                    input = "http://" + input;
+                }
+
+                if (!Uri.IsWellFormedUriString(input, UriKind.Absolute))
+                    MessageBox.Show(this, "The entered URL does not appear to be correctly formatted.", "Invalid URL", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                else
+                    url = new Uri(input, UriKind.Absolute);
+            }
+            while (url == null);
+            ImportFromWeb(url);
         }
 
         private void cmdPasteFromClipboard_Click(object sender, EventArgs e)
@@ -427,6 +433,30 @@ namespace VisualFizzler
 
         private void _selectorBox_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                var text = Clipboard.GetText();
+                if (text != null)
+                {
+                    text = text.Trim();
+                    if (text.StartsWith("http:") || text.StartsWith("https:"))
+                    {
+                        e.SuppressKeyPress = true;
+                        e.Handled = true;
+                        ImportFromWeb(new Uri(text));
+                    }
+                    else if (text.StartsWith("<"))
+                    {
+                        e.SuppressKeyPress = true;
+                        e.Handled = true;
+                        var document = new HtmlDocument();
+                        document.LoadHtml2(text);
+                        Open(document);
+                    }
+                }
+            }
+
+
             if (e.KeyCode == Keys.Down)
             {
                 e.Handled = true;

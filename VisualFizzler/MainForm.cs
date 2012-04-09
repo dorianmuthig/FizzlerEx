@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using Fizzler;
 using Fizzler.Systems.HtmlAgilityPack;
 using HtmlAgilityPack;
@@ -25,6 +27,7 @@ namespace VisualFizzler
             | RegexOptions.Compiled
             | RegexOptions.CultureInvariant);
 
+        private HtmlDocument _originalDocument;
         private HtmlDocument _document;
         private Match[] _selectorMatches;
         private Uri _lastKnownGoodImportedUrl;
@@ -192,14 +195,38 @@ namespace VisualFizzler
         }
 
 
-        private void Open(HtmlDocument document)
+        private static string FormatHtml(ref HtmlDocument document)
         {
-            _document = document;
+            document.OptionOutputAsXml = true;
+            var str = document.DocumentNode.WriteTo();
+            document.OptionOutputAsXml = false;
+            var x = XDocument.Parse(str);
+            var formatted = x.ToString();
+            document = new HtmlDocument();
+            document.LoadHtml2(formatted);
+            return formatted;
+        }
+
+
+        private void UpdateHtml()
+        {
+            _document = _originalDocument;
             _documentBox.Clear();
-            _documentBox.Text = document.DocumentNode.OuterHtml;
+            var html = ShouldFormatHtml ? FormatHtml(ref _document) : _document.DocumentNode.OuterHtml;
+        
+            _documentBox.Text = html;
+
+
             _selectorMatches = null;
             HighlightMarkup(_documentBox, Color.Blue, Color.FromArgb(163, 21, 21), Color.Red);
             Evaluate();
+        }
+
+
+        private void Open(HtmlDocument document)
+        {
+            _originalDocument = document;
+            UpdateHtml();
         }
 
         private static void HighlightMarkup(RichTextBox rtb, Color tagColor, Color tagNameColor, Color attributeNameColor)
@@ -331,6 +358,19 @@ namespace VisualFizzler
         private void fileToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
             cmdPasteFromClipboard.Enabled = Clipboard.ContainsText();
+        }
+
+        private void chkFormatHtml_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateHtml();
+        }
+
+        private bool ShouldFormatHtml
+        {
+            get
+            {
+                return chkFormatHtml.Checked;
+            }
         }
 
     }

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
@@ -14,7 +15,6 @@ using System.Xml.Linq;
 using Fizzler;
 using Fizzler.Systems.HtmlAgilityPack;
 using HtmlAgilityPack;
-using Mannex.Net;
 using Microsoft.VisualBasic;
 using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 
@@ -65,11 +65,12 @@ namespace VisualFizzler
 
             string content;
             var wc = new WebClient();
+            wc.Encoding = Encoding.UTF8;
 
             try
             {
                 using (CurrentCursorScope.EnterWait())
-                    content = wc.DownloadStringUsingResponseEncoding(url);
+                    content = wc.DownloadString(url);
             }
             catch (WebException e)
             {

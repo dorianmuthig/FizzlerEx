@@ -120,12 +120,12 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(181, 6);
             // 
-            // formatHTMLToolStripMenuItem
+            // chkFormatHtml
             // 
             this.chkFormatHtml.Checked = true;
             this.chkFormatHtml.CheckOnClick = true;
             this.chkFormatHtml.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkFormatHtml.Name = "formatHTMLToolStripMenuItem";
+            this.chkFormatHtml.Name = "chkFormatHtml";
             this.chkFormatHtml.Size = new System.Drawing.Size(184, 22);
             this.chkFormatHtml.Text = "Format HTML";
             this.chkFormatHtml.CheckedChanged += new System.EventHandler(this.chkFormatHtml_CheckedChanged);
@@ -218,6 +218,7 @@
             this._matchBox.Name = "_matchBox";
             this._matchBox.Size = new System.Drawing.Size(250, 409);
             this._matchBox.TabIndex = 0;
+            this._matchBox.SelectedIndexChanged += new System.EventHandler(this._matchBox_SelectedIndexChanged);
             // 
             // _documentBox
             // 

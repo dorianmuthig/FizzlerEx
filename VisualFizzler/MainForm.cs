@@ -29,7 +29,7 @@ namespace VisualFizzler
 
         private HtmlDocument _originalDocument;
         private HtmlDocument _document;
-        private Match[] _selectorMatches;
+        private TagMatch[] _selectorMatches;
         private Uri _lastKnownGoodImportedUrl;
 
         public MainForm()
@@ -198,13 +198,21 @@ namespace VisualFizzler
         private static string FormatHtml(ref HtmlDocument document)
         {
             document.OptionOutputAsXml = true;
-            var str = document.DocumentNode.WriteTo();
+            var str = document.DocumentNode.WriteTo().Replace("\r", "");
             document.OptionOutputAsXml = false;
             var x = XDocument.Parse(str);
-            var formatted = x.ToString();
+            var formatted = x.ToString().Replace("\r", "");
             document = new HtmlDocument();
             document.LoadHtml2(formatted);
             return formatted;
+        }
+
+        private static string RemoveCarriageReturns(ref HtmlDocument document)
+        {
+            var str = document.DocumentNode.WriteTo().Replace("\r", "");
+            document = new HtmlDocument();
+            document.LoadHtml2(str);
+            return str;
         }
 
 
@@ -212,8 +220,8 @@ namespace VisualFizzler
         {
             _document = _originalDocument;
             _documentBox.Clear();
-            var html = ShouldFormatHtml ? FormatHtml(ref _document) : _document.DocumentNode.OuterHtml;
-        
+            var html = ShouldFormatHtml ? FormatHtml(ref _document) : RemoveCarriageReturns(ref _document);
+
             _documentBox.Text = html;
 
 
@@ -262,6 +270,12 @@ namespace VisualFizzler
                 Highlight(rtb, match.Index, match.Length, color, backColor, font);
         }
 
+        private static void Highlight(RichTextBox rtb, IEnumerable<TagMatch> matches, Color? color, Color? backColor, Font font)
+        {
+            foreach (var match in matches)
+                Highlight(rtb, match.Index, match.Length, color, backColor, font);
+        }
+
         private static void Highlight(RichTextBox rtb, int start, int length, Color? color, Color? backColor, Font font)
         {
             rtb.SelectionStart = start;
@@ -276,7 +290,7 @@ namespace VisualFizzler
             _selectorMatches = Evaluate(_document, _selectorBox, _matchBox, errorText, _statusLabel, _selectorMatches, _documentBox);
         }
 
-        private static Match[] Evaluate(HtmlDocument document, Control tb, ListBox lb, ToolStripStatusLabel hb, ToolStripItem status, IEnumerable<Match> oldMatches, RichTextBox rtb)
+        private static TagMatch[] Evaluate(HtmlDocument document, Control tb, ListBox lb, ToolStripStatusLabel hb, ToolStripItem status, IEnumerable<TagMatch> oldMatches, RichTextBox rtb)
         {
             var input = tb.Text.Trim();
             tb.ForeColor = SystemColors.WindowText;
@@ -325,18 +339,17 @@ namespace VisualFizzler
             {
                 lb.Items.Clear();
                 if (!elements.Any())
-                    return new Match[0];
+                    return new TagMatch[0];
 
                 var html = rtb.Text;
-                var matches = new List<Match>(elements.Length);
+                var matches = new List<TagMatch>(elements.Length);
                 foreach (var element in elements)
                 {
                     if (element.Line != 0)
                     {
                         var index = rtb.GetFirstCharIndexFromLine(element.Line - 1) + element.LinePosition - 1;
-                        var match = _tagExpression.Match(html, index);
-                        if (match.Success)
-                            matches.Add(match);
+                        var match = new TagMatch(element.StreamPosition, element.Name.Length + 1);
+                        matches.Add(match);
                     }
                 }
 
@@ -373,6 +386,11 @@ namespace VisualFizzler
             {
                 return chkFormatHtml.Checked;
             }
+        }
+
+        private void _matchBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
 
     }

@@ -273,11 +273,12 @@ namespace VisualFizzler
         private static void Highlight(RichTextBox rtb, IEnumerable<TagMatch> matches, Color? color, Color? backColor, Font font)
         {
             foreach (var match in matches)
-                Highlight(rtb, match.Index, match.Length, color, backColor, font);
+                Highlight(rtb, match.StartIndex, match.TagLength, color, backColor, font);
         }
 
         private static void Highlight(RichTextBox rtb, int start, int length, Color? color, Color? backColor, Font font)
         {
+            if (start == -1) return;
             rtb.SelectionStart = start;
             rtb.SelectionLength = length;
             if (color != null) rtb.SelectionColor = color.Value;
@@ -290,7 +291,7 @@ namespace VisualFizzler
             _selectorMatches = Evaluate(_document, _selectorBox, _matchBox, errorText, _statusLabel, _selectorMatches, _documentBox);
         }
 
-        private static TagMatch[] Evaluate(HtmlDocument document, Control tb, ListBox lb, ToolStripStatusLabel hb, ToolStripItem status, IEnumerable<TagMatch> oldMatches, RichTextBox rtb)
+        private TagMatch[] Evaluate(HtmlDocument document, Control tb, ListBox lb, ToolStripStatusLabel hb, ToolStripItem status, IEnumerable<TagMatch> oldMatches, RichTextBox rtb)
         {
             var input = tb.Text.Trim();
             tb.ForeColor = SystemColors.WindowText;
@@ -331,8 +332,11 @@ namespace VisualFizzler
                 }
             }
 
+            ClearOldSelection();
+
             if (oldMatches != null)
                 Highlight(rtb, oldMatches, null, SystemColors.Info, null);
+
 
             lb.BeginUpdate();
             try
@@ -345,12 +349,8 @@ namespace VisualFizzler
                 var matches = new List<TagMatch>(elements.Length);
                 foreach (var element in elements)
                 {
-                    if (element.Line != 0)
-                    {
-                        var index = rtb.GetFirstCharIndexFromLine(element.Line - 1) + element.LinePosition - 1;
-                        var match = new TagMatch(element.StreamPosition, element.Name.Length + 1);
-                        matches.Add(match);
-                    }
+                    var match = new TagMatch(element);
+                    matches.Add(match);
                 }
 
                 Highlight(rtb, matches, null, Color.Yellow, null);
@@ -393,14 +393,24 @@ namespace VisualFizzler
             var selected = _matchBox.SelectedIndex;
             if (selected != -1)
             {
+                ClearOldSelection();
                 var match = _selectorMatches[selected];
-                var line = _documentBox.GetLineFromCharIndex(match.Index);
+                var line = _documentBox.GetLineFromCharIndex(match.StartIndex);
                 var caret = _documentBox.GetFirstCharIndexFromLine(Math.Max(0, line - 4));
                 _documentBox.SelectionStart = caret;
                 _documentBox.ScrollToCaret();
-                if (_oldSelection != null) Highlight(_documentBox, _oldSelection.Index, _oldSelection.Length, null, Color.Yellow, null); ;
-                Highlight(_documentBox, match.Index, match.Length, null, Color.LawnGreen, null);
+                Highlight(_documentBox, match.StartIndex, match.FullLength, null, Color.LawnGreen, null);
                 _oldSelection = match;
+            }
+        }
+
+        private void ClearOldSelection()
+        {
+            if (_oldSelection != null)
+            {
+                Highlight(_documentBox, _oldSelection.StartIndex, _oldSelection.FullLength, null, SystemColors.Info, null); ;
+                Highlight(_documentBox, _oldSelection.StartIndex, _oldSelection.TagLength, null, Color.Yellow, null); ;
+                _oldSelection = null;
             }
         }
 

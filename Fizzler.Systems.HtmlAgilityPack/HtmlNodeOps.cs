@@ -473,7 +473,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
 
         public Selector<HtmlNode> SelectParent()
         {
-            return nodes => nodes.Select(x => x.ParentNode);
+            return nodes => nodes.SelectNonNull(x => x.ParentNode);
         }
 
         public Selector<HtmlNode> Contains(string text)

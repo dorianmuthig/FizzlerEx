@@ -190,11 +190,19 @@ namespace VisualFizzler
             ImportFromWeb(url);
         }
 
+
+        private static string RemoveClipboardMetadata(string html)
+        {
+            var header = Regex.Match(html, @"^(\w+:[^\n]*\n)*", RegexOptions.Singleline);
+            return html.Substring(header.Value.Length);
+        }
+
+
         private void cmdPasteFromClipboard_Click(object sender, EventArgs e)
         {
             var document = new HtmlDocument();
             var html = Clipboard.GetText(TextDataFormat.Html);
-            if (!string.IsNullOrEmpty(html)) document.LoadHtml2(html);
+            if (!string.IsNullOrEmpty(html)) document.LoadHtml2(RemoveClipboardMetadata(html));
             else document.LoadHtml2(Clipboard.GetText());
             Open(document);
         }
@@ -213,7 +221,7 @@ namespace VisualFizzler
             try
             {
                 var x = XDocument.Parse(str);
-                var formatted = x.ToString().Replace("\r", "");
+                var formatted = x.ToString(SaveOptions.None).Replace("\r", "");
                 document = new HtmlDocument();
                 document.LoadHtml2(formatted);
                 return formatted;

@@ -224,7 +224,7 @@ namespace VisualFizzler
 
             _documentBox.Text = html;
 
-
+            _oldSelection = null;
             _selectorMatches = null;
             HighlightMarkup(_documentBox, Color.Blue, Color.FromArgb(163, 21, 21), Color.Red);
             Evaluate();
@@ -390,8 +390,21 @@ namespace VisualFizzler
 
         private void _matchBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            var selected = _matchBox.SelectedIndex;
+            if (selected != -1)
+            {
+                var match = _selectorMatches[selected];
+                var line = _documentBox.GetLineFromCharIndex(match.Index);
+                var caret = _documentBox.GetFirstCharIndexFromLine(Math.Max(0, line - 4));
+                _documentBox.SelectionStart = caret;
+                _documentBox.ScrollToCaret();
+                if (_oldSelection != null) Highlight(_documentBox, _oldSelection.Index, _oldSelection.Length, null, Color.Yellow, null); ;
+                Highlight(_documentBox, match.Index, match.Length, null, Color.LawnGreen, null);
+                _oldSelection = match;
+            }
         }
+
+        private TagMatch _oldSelection;
 
     }
 }

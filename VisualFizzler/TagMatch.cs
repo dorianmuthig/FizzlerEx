@@ -5,7 +5,7 @@ using System.Text;
 
 namespace VisualFizzler
 {
-    public struct TagMatch
+    public class TagMatch
     {
         private int _start;
         private int _length;

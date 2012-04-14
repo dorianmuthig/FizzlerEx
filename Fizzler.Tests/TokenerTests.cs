@@ -151,6 +151,12 @@ namespace Fizzler.Tests
         }
 
         [Test]
+        public void RegexMatch()
+        {
+            Assert.AreEqual(TokenKind.RegexMatch, Tokener.Tokenize("%=").First().Kind);
+        }
+
+        [Test]
         public void TildeTilde()
         {
             Assert.AreEqual(new[] { Token.Tilde(), Token.Tilde() }, Tokener.Tokenize("~~").Take(2).ToArray());

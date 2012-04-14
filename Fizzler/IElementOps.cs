@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 namespace Fizzler
 {
     /// <summary>
@@ -62,6 +63,13 @@ namespace Fizzler
         /// which is exactly <paramref name="value"/>.
         /// </summary>
         Selector<TElement> AttributeIncludes(NamespacePrefix prefix, string name, string value);
+
+        /// <summary>
+        /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>
+        /// that represents an element whose the given attribute <paramref name="name"/>
+        /// has a value that matches the specified regex.
+        /// </summary>
+        Selector<TElement> AttributeRegexMatch(NamespacePrefix prefix, string name, string value);
 
         /// <summary>
         /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>

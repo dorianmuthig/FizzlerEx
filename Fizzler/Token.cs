@@ -158,6 +158,14 @@ namespace Fizzler
         }
 
         /// <summary>
+        /// Creates a regex match token.
+        /// </summary>
+        public static Token RegexMatch()
+        {
+            return new Token(TokenKind.RegexMatch);
+        }
+
+        /// <summary>
         /// Creates a dash-match token.
         /// </summary>
         public static Token DashMatch()

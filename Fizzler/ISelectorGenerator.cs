@@ -77,7 +77,7 @@ namespace Fizzler
         /// or with a different value <paramref name="value"/>.
         /// </summary>
         void AttributeNotEqual(NamespacePrefix prefix, string name, string value);
-
+        
         /// <summary>
         /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>
         /// that represents an element with the given attribute <paramref name="name"/>
@@ -85,6 +85,13 @@ namespace Fizzler
         /// which is exactly <paramref name="value"/>.
         /// </summary>
         void AttributeIncludes(NamespacePrefix prefix, string name, string value);
+
+        /// <summary>
+        /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>
+        /// that represents an element whose the given attribute <paramref name="name"/>
+        /// has a value that matches the specified regex.
+        /// </summary>
+        void AttributeRegexMatch(NamespacePrefix prefix, string name, string value);
 
         /// <summary>
         /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>

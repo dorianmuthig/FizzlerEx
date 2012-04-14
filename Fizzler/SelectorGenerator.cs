@@ -194,6 +194,16 @@ namespace Fizzler
 
         /// <summary>
         /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>
+        /// that represents an element whose the given attribute <paramref name="name"/>
+        /// has a value that matches the specified regex.
+        /// </summary>
+        public virtual void AttributeRegexMatch(NamespacePrefix prefix, string name, string value)
+        {
+            Add(Ops.AttributeRegexMatch(prefix, name, value));
+        }
+
+        /// <summary>
+        /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>
         /// that represents an element with the given attribute <paramref name="name"/>,
         /// its value either being exactly <paramref name="value"/> or beginning 
         /// with <paramref name="value"/> immediately followed by "-" (U+002D).

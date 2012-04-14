@@ -106,6 +106,7 @@
                             }
                         case '^': // ^=
                         case '$': // $=
+                        case '%': // $=
                         case '!': // !=
                             {
                                 if (reader.Read() != '=')
@@ -115,6 +116,7 @@
                                 {
                                     case '^': yield return Token.PrefixMatch(); break;
                                     case '$': yield return Token.SuffixMatch(); break;
+                                    case '%': yield return Token.RegexMatch(); break;
                                     case '!': yield return Token.NotEqual(); break;
                                 }
                                 break;

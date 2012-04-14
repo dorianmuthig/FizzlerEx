@@ -49,6 +49,11 @@ namespace Fizzler
         /// Represents "*="
         /// </summary>
         SubstringMatch,
+
+        /// <summary>
+        /// Represents "%"
+        /// </summary>
+        RegexMatch,
         
         /// <summary>
         /// Represents {string}

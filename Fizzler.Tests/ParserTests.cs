@@ -566,6 +566,11 @@ namespace Fizzler.Tests
                 throw new NotImplementedException();
             }
 
+            public void AttributeRegexMatch(NamespacePrefix prefix, string name, string value)
+            {
+                throw new NotImplementedException();
+            }
+
             #endregion
 
 

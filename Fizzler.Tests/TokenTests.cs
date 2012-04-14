@@ -93,6 +93,12 @@
         }
 
         [Test]
+        public void RegexMatch()
+        {
+            AssertToken(TokenKind.RegexMatch, Token.RegexMatch());
+        }
+
+        [Test]
         public void DashMatch()
         {
             AssertToken(TokenKind.DashMatch, Token.DashMatch());

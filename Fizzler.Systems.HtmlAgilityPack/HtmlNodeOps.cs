@@ -8,6 +8,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
     using System.Linq;
     using global::HtmlAgilityPack;
     using System.Collections.Generic;
+    using System.Text.RegularExpressions;
 
     #endregion
 
@@ -127,6 +128,32 @@ namespace Fizzler.Systems.HtmlAgilityPack
                              where a != null && a.Value.Split(' ').Contains(value)
                              select n);
         }
+
+        /// <summary>
+        /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>
+        /// that represents an element whose the given attribute <paramref name="name"/>
+        /// has a value that matches the specified regex.
+        /// </summary>
+        public virtual Selector<HtmlNode> AttributeRegexMatch(NamespacePrefix prefix, string name, string value)
+        {
+            Regex regex;
+            try
+            {
+                regex = new Regex(value, RegexOptions.Multiline | RegexOptions.Singleline);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new FormatException(ex.Message, ex);
+            }
+
+            return prefix.IsSpecific
+                 ? (Selector<HtmlNode>)(nodes => Enumerable.Empty<HtmlNode>())
+                 : (nodes => from n in nodes.Elements()
+                             let a = n.GetAttributeValue(name, string.Empty)
+                             where regex.IsMatch(a)
+                             select n);
+        }
+
 
         /// <summary>
         /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>

@@ -408,6 +408,7 @@ namespace Fizzler
                     ToTokenSpec(Token.Equals()),
                     ToTokenSpec(TokenKind.NotEqual),
                     ToTokenSpec(TokenKind.Includes),
+                    ToTokenSpec(TokenKind.RegexMatch),
                     ToTokenSpec(TokenKind.DashMatch),
                     ToTokenSpec(TokenKind.PrefixMatch),
                     ToTokenSpec(TokenKind.SuffixMatch),
@@ -428,6 +429,7 @@ namespace Fizzler
                     switch (op.Value.Kind)
                     {
                         case TokenKind.Includes: _generator.AttributeIncludes(prefix, name, value); break;
+                        case TokenKind.RegexMatch: _generator.AttributeRegexMatch(prefix, name, value); break;
                         case TokenKind.DashMatch: _generator.AttributeDashMatch(prefix, name, value); break;
                         case TokenKind.PrefixMatch: _generator.AttributePrefixMatch(prefix, name, value); break;
                         case TokenKind.SuffixMatch: _generator.AttributeSuffixMatch(prefix, name, value); break;

@@ -136,15 +136,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public virtual Selector<HtmlNode> AttributeRegexMatch(NamespacePrefix prefix, string name, string value)
         {
-            Regex regex;
-            try
-            {
-                regex = new Regex(value, RegexOptions.Multiline | RegexOptions.Singleline);
-            }
-            catch (ArgumentException ex)
-            {
-                throw new FormatException(ex.Message, ex);
-            }
+            var regex = CreateRegex(value);
 
             return prefix.IsSpecific
                  ? (Selector<HtmlNode>)(nodes => Enumerable.Empty<HtmlNode>())
@@ -508,7 +500,25 @@ namespace Fizzler.Systems.HtmlAgilityPack
             return nodes => nodes.Where(x => x.InnerText.Contains(text));
         }
 
+        public Selector<HtmlNode> Matches(string pattern)
+        {
+            var regex = CreateRegex(pattern);
+            return nodes => nodes.Where(x => regex.IsMatch(x.InnerText));
+        }
 
+
+
+        private static Regex CreateRegex(string pattern)
+        {
+            try
+            {
+                return new Regex(pattern, RegexOptions.Multiline | RegexOptions.Singleline);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new FormatException(ex.Message, ex);
+            }
+        }
 
 
 

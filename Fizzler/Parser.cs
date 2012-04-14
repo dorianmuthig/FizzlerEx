@@ -266,6 +266,7 @@ namespace Fizzler
                 case "between": Between(); break;
                 case "not": Not(); break;
                 case "contains": Contains(); break;
+                case "matches": Matches(); break;
                 default:
                     {
                         throw new FormatException(string.Format(
@@ -282,6 +283,13 @@ namespace Fizzler
         {
             var text = Read(ToTokenSpec(TokenKind.String)).Text;
             _generator.Contains(text);
+        }
+
+
+        private void Matches()
+        {
+            var text = Read(ToTokenSpec(TokenKind.String)).Text;
+            _generator.Matches(text);
         }
 
 

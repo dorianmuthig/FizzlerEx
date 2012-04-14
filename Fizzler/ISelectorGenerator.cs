@@ -232,6 +232,13 @@ namespace Fizzler
         void Contains(string text);
 
 
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// which represents an element whose text content matches the specified regex.
+        /// </summary>
+        void Matches(string regex);
+
+
         //
         // Combinators
         //

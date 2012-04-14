@@ -9,6 +9,7 @@ namespace VisualFizzler
     public class TagMatch
     {
 
+        [CLSCompliant(false)]
         public TagMatch(HtmlNode node)
         {
             StartIndex = GetStartIndex(node);

@@ -419,6 +419,15 @@ namespace Fizzler
             Add(Ops.Contains(text));
         }
 
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// which represents an element whose text content matches the specified regex.
+        /// </summary>
+        public void Matches(string regex)
+        {
+            Add(Ops.Matches(regex));
+        }
+
 
         /// <summary>
         /// Creates an empty instance of the same type of the current generator.

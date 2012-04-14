@@ -555,6 +555,11 @@ namespace Fizzler.Tests
                 throw new NotImplementedException();
             }
 
+            public void Matches(string regex)
+            {
+                throw new NotImplementedException();
+            }
+
 
             public ISelectorGenerator CreateNew()
             {

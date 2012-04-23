@@ -404,7 +404,11 @@ namespace Fizzler.Systems.HtmlAgilityPack
 
         public Selector<HtmlNode> Last()
         {
-            return nodes => new[] { nodes.LastOrDefault() };
+            return nodes =>
+            {
+                var last = nodes.LastOrDefault();
+                return last != null ? new[] { last } : Enumerable.Empty<HtmlNode>();
+            };
         }
 
     }

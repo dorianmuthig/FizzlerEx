@@ -421,8 +421,6 @@ namespace Fizzler.Tests
                 AttributeSubstringValue = value;
             }
 
-            #region Unimplemented memebers
-
             public void OnInit()
             {
             }
@@ -576,10 +574,10 @@ namespace Fizzler.Tests
                 throw new NotImplementedException();
             }
 
-            #endregion
-
-
-
+            public void Last()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

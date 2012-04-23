@@ -285,5 +285,10 @@ namespace Fizzler
 
         void AnchorToRoot();
 
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// which represents the last matched element.
+        /// </summary>
+        void Last();
     }
 }

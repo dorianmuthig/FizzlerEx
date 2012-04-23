@@ -250,10 +250,6 @@ namespace Fizzler
             Add(Ops.Matches(regex));
         }
 
-
-        /// <summary>
-        /// Creates an empty instance of the same type of the current generator.
-        /// </summary>
         public ISelectorGenerator CreateNew()
         {
             return new SelectorGenerator<TElement>(Ops, _equalityComparer);
@@ -264,6 +260,12 @@ namespace Fizzler
         {
             anchorToRoot = true;
         }
+
+        public void Last()
+        {
+            Add(Ops.Last());
+        }
+
 
     }
 }

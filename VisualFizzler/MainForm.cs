@@ -200,8 +200,12 @@ namespace VisualFizzler
 
         private void cmdPasteFromClipboard_Click(object sender, EventArgs e)
         {
+            PasteHtml(Clipboard.GetText(TextDataFormat.Html));
+        }
+
+        private void PasteHtml(string html)
+        {
             var document = new HtmlDocument();
-            var html = Clipboard.GetText(TextDataFormat.Html);
             if (!string.IsNullOrEmpty(html)) document.LoadHtml2(RemoveClipboardMetadata(html));
             else document.LoadHtml2(Clipboard.GetText());
             Open(document);
@@ -471,16 +475,7 @@ namespace VisualFizzler
         {
             if (e.Control && e.KeyCode == Keys.V)
             {
-                if (Clipboard.ContainsText(TextDataFormat.Html))
-                {
-                    e.IsInputKey = true;
-                }
-                else
-                {
-                    var text = Clipboard.GetText();
-                    if (text != null && Regex.IsMatch(text, @"\s*(https?:|<)"))
-                        e.IsInputKey = true;
-                }
+                e.IsInputKey = true;
             }
         }
 
@@ -489,22 +484,26 @@ namespace VisualFizzler
 
             if (e.Control && e.KeyCode == Keys.V)
             {
-                var text = Clipboard.GetText();
-                if (text != null)
+                var text = Clipboard.GetText(TextDataFormat.UnicodeText).Trim();
+                var html = Regex.Match(Clipboard.GetText(TextDataFormat.Html), @"<!--StartFragment-->(.*)<!--EndFragment-->", RegexOptions.Singleline).Groups[1].Value;
+
+                if (text.StartsWith("http:") || text.StartsWith("https:"))
                 {
-                    text = text.Trim();
-                    if (text.StartsWith("http:") || text.StartsWith("https:"))
-                    {
-                        e.SuppressKeyPress = true;
-                        e.Handled = true;
-                        ImportFromWeb(new Uri(text));
-                    }
-                    else if (text.StartsWith("<") || Clipboard.ContainsText(TextDataFormat.Html))
-                    {
-                        e.SuppressKeyPress = true;
-                        e.Handled = true;
-                        cmdPasteFromClipboard_Click(sender, EventArgs.Empty);
-                    }
+                    e.SuppressKeyPress = true;
+                    e.Handled = true;
+                    ImportFromWeb(new Uri(text));
+                }
+                else if (text.StartsWith("<"))
+                {
+                    e.SuppressKeyPress = true;
+                    e.Handled = true;
+                    PasteHtml(text);
+                }
+                else if (html.Contains("<div") || html.Contains("<td") || html.Length > 2048)
+                {
+                    e.SuppressKeyPress = true;
+                    e.Handled = true;
+                    PasteHtml(html);
                 }
             }
 

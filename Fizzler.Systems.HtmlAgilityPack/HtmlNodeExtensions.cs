@@ -16,6 +16,24 @@ namespace Fizzler.Systems.HtmlAgilityPack
     /// </summary>
     public static class HtmlNodeExtensions
     {
+
+        [Obsolete("Use LoadHtml() instead. The version of HtmlAgilityPack which is included in FizzlerEx does NOT suffer from the Form nesting bug.")]
+        public static void LoadHtml2(this HtmlDocument document, string html)
+        {
+            document.LoadHtml(html);
+        }
+
+#if !NETFX_CORE
+        [Obsolete("Use Load() instead. The version of HtmlAgilityPack which is included in FizzlerEx does NOT suffer from the Form nesting bug.")]
+        public static void Load2(this HtmlDocument document, string path)
+        {
+            document.Load(path);
+        }
+#endif
+
+
+
+
         /// <summary>
         /// Determines whether this node is an element or not.
         /// </summary>
@@ -136,7 +154,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public static string GetBeginTagString(this HtmlNode node)
         {
-            if(node == null) throw new ArgumentNullException("node");
+            if (node == null) throw new ArgumentNullException("node");
 
             if (!node.IsElement())
                 return string.Empty;

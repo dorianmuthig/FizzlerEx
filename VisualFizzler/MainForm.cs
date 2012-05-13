@@ -52,7 +52,7 @@ namespace VisualFizzler
                 return;
 
             var document = new HtmlDocument();
-            document.Load2(_openFileDialog.FileName);
+            document.Load(_openFileDialog.FileName);
             Open(document);
         }
 
@@ -119,7 +119,7 @@ namespace VisualFizzler
             using (CurrentCursorScope.EnterWait())
             {
                 var document = new HtmlDocument();
-                document.LoadHtml2(content);
+                document.LoadHtml(content);
                 Open(document);
             }
 
@@ -206,8 +206,8 @@ namespace VisualFizzler
         private void PasteHtml(string html)
         {
             var document = new HtmlDocument();
-            if (!string.IsNullOrEmpty(html)) document.LoadHtml2(RemoveClipboardMetadata(html));
-            else document.LoadHtml2(Clipboard.GetText());
+            if (!string.IsNullOrEmpty(html)) document.LoadHtml(RemoveClipboardMetadata(html));
+            else document.LoadHtml(Clipboard.GetText());
             Open(document);
         }
 
@@ -227,7 +227,7 @@ namespace VisualFizzler
                 var x = XDocument.Parse(str);
                 var formatted = x.ToString(SaveOptions.None).Replace("\r", "");
                 document = new HtmlDocument();
-                document.LoadHtml2(formatted);
+                document.LoadHtml(formatted);
                 return formatted;
             }
             catch (XmlException)
@@ -240,7 +240,7 @@ namespace VisualFizzler
         {
             var str = document.DocumentNode.WriteTo().Replace("\r", "");
             document = new HtmlDocument();
-            document.LoadHtml2(str);
+            document.LoadHtml(str);
             return str;
         }
 

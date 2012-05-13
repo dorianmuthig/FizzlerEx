@@ -28,7 +28,7 @@ namespace Fizzler.Tests
                     html = reader.ReadToEnd();
             }
 	        var document = new HtmlDocument();
-            document.LoadHtml2(html);
+            document.LoadHtml(html);
             Document = document;
         }
 

@@ -49,9 +49,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fizzler.Systems.HtmlAgilityPack\Fizzler.Systems.HtmlAgilityPack.csproj">
-      <Project>{DBEAD205-BD5C-461F-873D-DE643016F14C}</Project>
-      <Name>Fizzler.Systems.HtmlAgilityPack %28Systems\Fizzler.Systems.HtmlAgilityPack%29</Name>
+    <ProjectReference Include="..\Fizzler\Fizzler.csproj">
+      <Project>{939036d6-29fd-46e4-b6cd-52618f51081b}</Project>
+      <Name>Fizzler</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

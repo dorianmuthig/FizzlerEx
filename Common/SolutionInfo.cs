@@ -56,4 +56,4 @@ using ComVisible = System.Runtime.InteropServices.ComVisibleAttribute;
 //
 
 [assembly: ComVisible(false)]
-[assembly: CLSCompliant(true)]
+[assembly: CLSCompliant(false)]

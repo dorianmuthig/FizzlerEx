@@ -12,8 +12,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fizzler", "Fizzler\Fizzler.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fizzler.Tests", "Fizzler.Tests\Fizzler.Tests.csproj", "{61EDF5C0-1854-4867-AE8A-7A1216E116C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fizzler.Systems.HtmlAgilityPack", "Fizzler.Systems.HtmlAgilityPack\Fizzler.Systems.HtmlAgilityPack.csproj", "{DBEAD205-BD5C-461F-873D-DE643016F14C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualFizzler", "VisualFizzler\VisualFizzler.csproj", "{46AA901E-21D1-4720-B173-532B91105CE7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleFizzler", "ConsoleFizzler\ConsoleFizzler.csproj", "{296C2824-A7D7-42A0-9B4C-1BC8FA0A1859}"
@@ -112,20 +110,6 @@ Global
 		{939036D6-29FD-46E4-B6CD-52618F51081B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{939036D6-29FD-46E4-B6CD-52618F51081B}.Release|x64.ActiveCfg = Release|Any CPU
 		{939036D6-29FD-46E4-B6CD-52618F51081B}.Release|x86.ActiveCfg = Release|Any CPU
-		{DBEAD205-BD5C-461F-873D-DE643016F14C}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{DBEAD205-BD5C-461F-873D-DE643016F14C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DBEAD205-BD5C-461F-873D-DE643016F14C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DBEAD205-BD5C-461F-873D-DE643016F14C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{DBEAD205-BD5C-461F-873D-DE643016F14C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{DBEAD205-BD5C-461F-873D-DE643016F14C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{DBEAD205-BD5C-461F-873D-DE643016F14C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DBEAD205-BD5C-461F-873D-DE643016F14C}.Release|ARM.ActiveCfg = Release|Any CPU
-		{DBEAD205-BD5C-461F-873D-DE643016F14C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DBEAD205-BD5C-461F-873D-DE643016F14C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DBEAD205-BD5C-461F-873D-DE643016F14C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{DBEAD205-BD5C-461F-873D-DE643016F14C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{DBEAD205-BD5C-461F-873D-DE643016F14C}.Release|x64.ActiveCfg = Release|Any CPU
-		{DBEAD205-BD5C-461F-873D-DE643016F14C}.Release|x86.ActiveCfg = Release|Any CPU
 		{E5A12014-E58C-48D1-91D3-B7C5B351F341}.Debug|ARM.ActiveCfg = Debug|x86
 		{E5A12014-E58C-48D1-91D3-B7C5B351F341}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{E5A12014-E58C-48D1-91D3-B7C5B351F341}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
@@ -143,9 +127,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{DBEAD205-BD5C-461F-873D-DE643016F14C} = {7AA23AC0-0852-45AC-8661-6FFBD3BD265D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		VisualSVNWorkingCopyRoot = 

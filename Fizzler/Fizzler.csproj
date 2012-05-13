@@ -60,14 +60,30 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\Libs\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Common\SolutionInfo.cs">
       <Link>SolutionInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Fizzler.Systems.HtmlAgilityPack\ExtensionMethods.cs">
+      <Link>Systems\HtmlAgilityPack\ExtensionMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\Fizzler.Systems.HtmlAgilityPack\HtmlNodeExtensions.cs">
+      <Link>Systems\HtmlAgilityPack\HtmlNodeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Fizzler.Systems.HtmlAgilityPack\HtmlNodeOps.cs">
+      <Link>Systems\HtmlAgilityPack\HtmlNodeOps.cs</Link>
+    </Compile>
+    <Compile Include="..\Fizzler.Systems.HtmlAgilityPack\HtmlNodeSelection.cs">
+      <Link>Systems\HtmlAgilityPack\HtmlNodeSelection.cs</Link>
     </Compile>
     <Compile Include="LRUCache.cs" />
     <Compile Include="Either.cs" />

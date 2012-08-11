@@ -205,10 +205,21 @@ namespace VisualFizzler
 
         private void PasteHtml(string html)
         {
-            var document = new HtmlDocument();
-            if (!string.IsNullOrEmpty(html)) document.LoadHtml(RemoveClipboardMetadata(html));
-            else document.LoadHtml(Clipboard.GetText());
-            Open(document);
+            LoadHtml(!string.IsNullOrEmpty(html) ? RemoveClipboardMetadata(html) : Clipboard.GetText());
+        }
+
+        public void LoadHtml(string html)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(html);
+            Open(doc);
+        }
+
+        public void LoadHtml(HtmlNode html)
+        {
+            var doc = new HtmlDocument();
+            doc.DocumentNode.ChildNodes.Add(html);
+            Open(doc);
         }
 
         private void SelectorBox_TextChanged(object sender, EventArgs e)
@@ -479,6 +490,8 @@ namespace VisualFizzler
             }
         }
 
+        public bool CloseOnEsc { get; set; }
+
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
 
@@ -507,6 +520,10 @@ namespace VisualFizzler
                 }
             }
 
+            if (e.KeyCode == Keys.Escape && CloseOnEsc)
+            {
+                Close();
+            }
         }
 
     }

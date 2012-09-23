@@ -93,11 +93,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
+  <ItemGroup>
+    <None Include="..\Fizzler\Properties\VersionInfo.template.cs">
+      <Link>Properties\VersionInfo.template.cs</Link>
+    </None>
+    <Compile Include="..\Fizzler\Properties\VersionInfo.generated.cs">
+      <Link>Properties\VersionInfo.generated.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <UsingTask TaskName="HgVersionFile" AssemblyFile="..\MSBuildVersioning.dll" />
   <Target Name="BeforeBuild">
+    <HgVersionFile TemplateFile="..\Fizzler\Properties\VersionInfo.template.cs" DestinationFile="..\Fizzler\Properties\VersionInfo.generated.cs" />
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

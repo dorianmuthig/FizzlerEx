@@ -230,13 +230,45 @@ namespace Fizzler
                     case "empty": _generator.Empty(); break;
                     case "last": _generator.Last(); break;
                     case "select-parent": _generator.SelectParent(); break;
-                    default:
-                        {
-                            throw new FormatException(string.Format(
-                                "Unknown pseudo-class '{0}'. Use either first-child, last-child, only-child or empty.", clazz));
-                        }
+                    default: CustomSelector(clazz, false); break;
                 }
             }
+        }
+
+        private void CustomSelector(string name, bool hasArguments)
+        {
+            Delegate deleg;
+            if (!CustomSelectors.TryGetValue(name, out deleg))
+                throw new FormatException(string.Format("Unknown pseudo-selector '{0}'.", name));
+            var formalParameters = deleg.Method.GetParameters();
+            var actualParameters = new object[formalParameters.Length];
+
+            for (int i = 0; i < formalParameters.Length; i++)
+            {
+                if (i != 0)
+                {
+                    Read(ToTokenSpec(Token.Semicolon()));
+                    Read(ToTokenSpec(TokenKind.WhiteSpace));
+                }
+                var type = formalParameters[i].ParameterType;
+                var typeCode = Type.GetTypeCode(type);
+                if (typeCode == TypeCode.String) actualParameters[i] = Read(ToTokenSpec(TokenKind.String)).Text;
+                else if (
+                    typeCode == TypeCode.Byte ||
+                    typeCode == TypeCode.UInt16 ||
+                    typeCode == TypeCode.UInt32 ||
+                    typeCode == TypeCode.UInt64 ||
+                    typeCode == TypeCode.SByte ||
+                    typeCode == TypeCode.Int16 ||
+                    typeCode == TypeCode.Int32 ||
+                    typeCode == TypeCode.Int64
+                    ) actualParameters[i] = int.Parse(Read(ToTokenSpec(TokenKind.Integer)).Text, CultureInfo.InvariantCulture);
+
+                else if (type.GetGenericTypeDefinition() == typeof(Selector<>)) actualParameters[i] = ParseSubGenerator().Selector;
+                else throw new ArgumentException(string.Format("Unsupported parameter type for custom selector '{0}'", name));
+            }
+            var selector = deleg.DynamicInvoke(actualParameters);
+            _generator.CustomSelector(selector);
         }
 
         private bool TryFunctionalPseudo()
@@ -268,11 +300,7 @@ namespace Fizzler
                 case "not": Not(); break;
                 case "contains": Contains(); break;
                 case "matches": Matches(); break;
-                default:
-                    {
-                        throw new FormatException(string.Format(
-                            "Unknown functional pseudo '{0}'. Only nth-child and nth-last-child are supported.", func));
-                    }
+                default: CustomSelector(func, true); break;
             }
 
             Read(ToTokenSpec(Token.RightParenthesis()));
@@ -574,5 +602,26 @@ namespace Fizzler
         {
             return TokenSpec.B(token);
         }
+
+        internal static Dictionary<string, Delegate> CustomSelectors = new Dictionary<string, Delegate>();
+
+        public static void RegisterCustomSelector<TNode>(string name, Func<Selector<TNode>> selector)
+        {
+            CustomSelectors.Add(name, selector);
+        }
+        public static void RegisterCustomSelector<TNode, T1>(string name, Func<T1, Selector<TNode>> selector)
+        {
+            CustomSelectors.Add(name, selector);
+        }
+        public static void RegisterCustomSelector<TNode, T1, T2>(string name, Func<T1, T2, Selector<TNode>> selector)
+        {
+            CustomSelectors.Add(name, selector);
+        }
+        public static void RegisterCustomSelector<TNode, T1, T2, T3>(string name, Func<T1, T2, T3, Selector<TNode>> selector)
+        {
+            CustomSelectors.Add(name, selector);
+        }
+
+
     }
 }

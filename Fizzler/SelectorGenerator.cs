@@ -28,6 +28,7 @@ namespace Fizzler
         }
 
         public Selector<TElement> Selector { get; private set; }
+        object ISelectorGenerator.Selector { get { return Selector; } }
 
         public IElementOps<TElement> Ops { get; private set; }
 
@@ -250,6 +251,11 @@ namespace Fizzler
             Add(Ops.Matches(regex));
         }
 
+        public void CustomSelector(object selector)
+        {
+            Add((Selector<TElement>)selector);
+        }
+
         public ISelectorGenerator CreateNew()
         {
             return new SelectorGenerator<TElement>(Ops, _equalityComparer);
@@ -265,7 +271,5 @@ namespace Fizzler
         {
             Add(Ops.Last());
         }
-
-
     }
 }

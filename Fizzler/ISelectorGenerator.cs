@@ -238,6 +238,11 @@ namespace Fizzler
         /// </summary>
         void Matches(string regex);
 
+        /// <summary>
+        /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,
+        /// which represents a user-defined selector.
+        /// </summary>
+        void CustomSelector(object selector);
 
         //
         // Combinators
@@ -290,5 +295,8 @@ namespace Fizzler
         /// which represents the last matched element.
         /// </summary>
         void Last();
+
+
+        object Selector { get; }
     }
 }

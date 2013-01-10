@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using HtmlAgilityPack;
 using Fizzler.Systems.HtmlAgilityPack;
+using Fizzler;
 
 namespace DummySandbox
 {
@@ -11,6 +12,19 @@ namespace DummySandbox
     {
         static void Main(string[] args)
         {
+            Parser.RegisterCustomSelector<HtmlNode, string>("where-class-is", @class =>
+            {
+                return nodes => nodes.Where(x => x.GetAttributeValue("class", null) == @class);
+            });
+            Parser.RegisterCustomSelector<HtmlNode>("where-is-b", () =>
+            {
+                return nodes => nodes.Where(x => x.Name == "b");
+            });
+            Parser.RegisterCustomSelector<HtmlNode, Selector<HtmlNode>>("inception", (selector) =>
+            {
+                return selector;
+            });
+
             var doc = new HtmlDocument();
             var p = doc.CreateElement("p");
             p.InnerHtml = (@"
@@ -38,6 +52,8 @@ namespace DummySandbox
 </div>
 
 ");
+
+            var result = p.QuerySelectorAll("*:inception(:has(footer))").ToArray();
 
             var r = p.QuerySelectorAll("#a > .asdf:split-after(hr)").ToArray();
             var s = r[0].ChildNodes[0].ParentNode;
